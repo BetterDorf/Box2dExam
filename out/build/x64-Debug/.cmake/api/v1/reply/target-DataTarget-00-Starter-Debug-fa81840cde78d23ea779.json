@@ -1,0 +1,35 @@
+{
+	"backtrace" : 1,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"add_custom_target"
+		],
+		"files" : 
+		[
+			"00-Starter/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 28,
+				"parent" : 0
+			}
+		]
+	},
+	"id" : "DataTarget-00-Starter::@c3a7f86003e0094fcd21",
+	"name" : "DataTarget-00-Starter",
+	"paths" : 
+	{
+		"build" : "00-Starter",
+		"source" : "00-Starter"
+	},
+	"sources" : [],
+	"type" : "UTILITY"
+}
