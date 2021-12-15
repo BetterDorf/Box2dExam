@@ -23,8 +23,8 @@ class GameManager //Singleton
 
 	//The timer is set to time between spawn multiplied by the spawnee's mod
 	float timeBetweenSpawn = 5.0f;
-	float shipMod = 1.0f;
-	float timer = 5.0f;
+	float shipMod = 0.5f;
+	float timer = 1.0f;
 	float spawnIncrease = 1.01f;
 
 	static GameManager* instance;

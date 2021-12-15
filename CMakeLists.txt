@@ -7,5 +7,5 @@ cmake_minimum_required (VERSION 3.8)
 project ("SAE921-GRP4100-Box2D")
 message("SOLUTION/PROJECT CMAKING " ${CMAKE_PROJECT_NAME})
 
-set(EXECUTABLE_CUSTOM_NAME "05-Experiments")
-add_subdirectory ("05-Experiments")
+set(EXECUTABLE_CUSTOM_NAME "Project")
+add_subdirectory ("Project")

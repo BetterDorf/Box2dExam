@@ -38,16 +38,19 @@ void Game::init() {
 	m_score_text.setString("0");
 	m_score_text.setFont(m_font);
 	m_score_text.setFillColor(sf::Color::White);
-	m_score_text.setCharacterSize(30);
-	m_score_text.setStyle(sf::Text::Bold);
-
+	m_score_text.setCharacterSize(50);
+	 
 	//GameOver
 	m_game_over_text.setString("GAME OVER");
 	m_game_over_text.setFont(m_font);
 	m_game_over_text.setFillColor(sf::Color::White);
 	m_game_over_text.setCharacterSize(200);
 	m_game_over_text.setStyle(sf::Text::Bold);
-	//m_game_over_text.setPosition(0, m_window.getSize().y / 2.0f);
+	m_game_over_text.setPosition(m_window.getSize().x / 10.0f, m_window.getSize().y / 2.0f);
+#pragma endregion
+
+#pragma region Borders
+
 #pragma endregion
 
 

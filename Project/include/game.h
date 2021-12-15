@@ -36,6 +36,7 @@ public:
 	//No need to check or set the instance, it is guaranteed to be set in the constructor beforehand
 	static Game* GetInstance() { return instance; }
 	std::vector<std::unique_ptr<Entity>>* GetEntities() { return &entities; }
+	b2Vec2 GetPlayerPos() { return player->GetBody()->GetPosition(); }
 
 	Game();
 	void init();
