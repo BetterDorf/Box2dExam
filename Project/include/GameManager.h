@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Window.hpp>
+#include <box2d/b2_math.h>
 
 //Game manager manages everything that happens game-wise :
 // It handles Spawning, scoring
@@ -9,6 +10,8 @@ class GameManager //Singleton
 	//Decide and call the other spawn functions then reset the timer
 	void GenericSpawn(); 
 	void SpawnEnemyShip(const int& num);
+
+	b2Vec2 GenerateSpawnPosition();
 
 	bool gameOver = false;
 

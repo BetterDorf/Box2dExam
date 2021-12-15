@@ -23,7 +23,7 @@ public:
 
 	//Take the path of the image for the sprite as well as the box2d coordinates and optionnaly, a tag for collisions
 	virtual void Init(const std::string& spritePath, float x, float y, Tag tag = Tag::DEFAULT);
-	void Update();
+	virtual void Update();
 
 	b2Body* GetBody() { return body_; }
 	UserData* GetData() { return  &userData_; }

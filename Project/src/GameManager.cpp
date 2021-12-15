@@ -57,20 +57,14 @@ void GameManager::SpawnEnemyShip(const int& num)
 {
 	score++;
 
-	Game* game = Game::GetInstance();
-
-	int maxX = game->getWindow().getSize().x;
-	int maxY = game->getWindow().getSize().y;
-
-	int posX = rand() % maxX;
-	int posY = rand() % maxY;
+	b2Vec2 pos = GenerateSpawnPosition();
 
 	for (int i = 0 ; i < num ; i++)
 	{
 		std::unique_ptr<DamagingEntity> uPtr = std::make_unique<DamagingEntity>(curId++);
-		uPtr->Init("data/StarShip.png", pixelsToMeters(posX), pixelsToMeters(posY), Tag::DAMAGING);
+		uPtr->Init("data/StarShip.png", pos.x, pos.y, Tag::DAMAGING);
 
-		game->GetEntities()->emplace_back(std::move(uPtr));
+		Game::GetInstance()->GetEntities()->emplace_back(std::move(uPtr));
 	}
 }
 
@@ -106,4 +100,20 @@ void GameManager::AddDeadId(int id)
 	score++;
 
 	deadIds.emplace_back(id);
+}
+
+b2Vec2 GameManager::GenerateSpawnPosition()
+{
+	Game* game = Game::GetInstance();
+	b2Vec2 pos;
+
+	int maxY = game->getWindow().getSize().y;
+	int maxX = game->getWindow().getSize().x;
+
+	do
+	{
+		pos = b2Vec2(pixelsToMeters(rand() % maxX), pixelsToMeters(rand() % maxY));
+	} while ((Game::GetInstance()->GetPlayerPos() - pos).Length() < NOSPAWN_RADIUS);
+
+	return pos;
 }

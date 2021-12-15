@@ -6,7 +6,7 @@ int main()
 {
     Game game;
 
-    game.init();
+	game.init();
 
-    game.loop();
+	game.loop();
 }

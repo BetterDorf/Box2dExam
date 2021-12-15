@@ -28,3 +28,15 @@ void DamagingEntity::DefineFixture(const b2Vec2 textureSize)
     body_->SetLinearDamping(0.1);
     body_->CreateFixture(&enemyFixtureDef);
 }
+
+void DamagingEntity::Update()
+{
+    Entity::Update();
+
+    //Apply force each frame
+    b2Vec2 destination = Game::GetInstance()->GetPlayerPos() - body_->GetPosition();
+    destination.Normalize();
+
+    destination *= ENEMY_ACCEL;
+    body_->ApplyForceToCenter(destination, true);
+}

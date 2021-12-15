@@ -51,8 +51,6 @@ void Entity::DefineFixture(const b2Vec2 textureSize)
     playerFixtureDef.restitution = 0.0f;
     playerFixtureDef.density = 1.0f;
 
-    //playerFixtureDef.userData.pointer = reinterpret_cast <std::uintptr_t>(&playerBoxData);
-
     body_->CreateFixture(&playerFixtureDef);
 }
 

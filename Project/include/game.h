@@ -32,6 +32,8 @@ private:
 	b2World m_world;
 	MyContactListener contact_listener_;
 
+	void CloseGame();
+
 public:
 	//No need to check or set the instance, it is guaranteed to be set in the constructor beforehand
 	static Game* GetInstance() { return instance; }

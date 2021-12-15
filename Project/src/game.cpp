@@ -118,10 +118,7 @@ void Game::loop()
 			if (event.type == sf::Event::Closed)
 			{
 				//Clear the entities
-				entities.clear();
-				player.release();
-
-				m_window.close();
+				CloseGame();
 				return;
 			}
 		}
@@ -141,6 +138,21 @@ void Game::loop()
 				player->Rotate(true);
 			else
 				player->DeccelRotate();
+		}
+		else
+		{
+			if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape))
+			{
+				//Clear the entities
+				CloseGame();
+				return;
+			}
+			if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space))
+			{
+				//TODO Make the game restart
+				CloseGame();
+				return;
+			}
 		}
 
 #pragma region Physical process
@@ -189,4 +201,12 @@ void Game::loop()
 		m_window.display();
 #pragma endregion
 	}
+}
+
+void Game::CloseGame()
+{
+	entities.clear();
+	player.release();
+
+	m_window.close();
 }

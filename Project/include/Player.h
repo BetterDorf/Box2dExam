@@ -7,6 +7,8 @@
 
 class Player : public Entity
 {
+protected:
+	void DefineFixture(const b2Vec2 textureSize) override;
 private:
 	const float speed = 1.0f;
 	const float max_speed = MAX_SPEED;
