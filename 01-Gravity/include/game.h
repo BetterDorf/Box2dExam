@@ -24,9 +24,10 @@ public:
 	static const float pixelsMetersRatio;
 
 private:
-
 	// The window ---------------------------------------------
 	sf::RenderWindow window_;
+
+	sf::Font font_;
 
 	// The physical world -------------------------------------
 	b2World world_{ b2Vec2(0.0f, -9.81f) };

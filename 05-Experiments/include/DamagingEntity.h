@@ -3,5 +3,6 @@
 
 class DamagingEntity : public Entity
 {
-	DamagingEntity() { userData_.SetTag(Tag::DAMAGING); }
+public:
+	DamagingEntity(int id) { id_ = id; }
 };

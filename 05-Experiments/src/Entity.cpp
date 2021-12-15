@@ -4,7 +4,13 @@
 #include "game.h"
 #include "Texture_manager.h"
 
-void Entity::Init(const std::string& spritePath, float x, float y)
+Entity::~Entity()
+{
+    Die();
+	body_->GetWorld()->DestroyBody(body_);
+}
+
+void Entity::Init(const std::string& spritePath, float x, float y, Tag tag)
 {
     //Get the instances
     sf::Texture& text = Texture_manager::Get_instance()->Request_texture(spritePath);
@@ -23,12 +29,15 @@ void Entity::Init(const std::string& spritePath, float x, float y)
     bodyDef.angularDamping = 0.75f;
     bodyDef.linearDamping = 0.75f;
 
-    bodyDef.userData.pointer = reinterpret_cast<uintptr_t>(this);
+    bodyDef.userData.pointer = reinterpret_cast<uintptr_t>(this); //The userData pointer point to this object
     body_ = game->getWorld().CreateBody(&bodyDef);
 
     //Create the fixture
 	DefineFixture(b2Vec2(pixelsToMeters(text.getSize().x),
         pixelsToMeters(text.getSize().y)));
+
+    //Change the user data
+    userData_.SetTag(tag);
 }
 
 void Entity::DefineFixture(const b2Vec2 textureSize)
@@ -52,4 +61,8 @@ void Entity::Update()
 {
 	setPosition(metersToPixels(body_->GetPosition()));
     setRotation(-radToDeg(body_->GetAngle()));
+}
+
+void Entity::Die()
+{
 }

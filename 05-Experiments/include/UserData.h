@@ -5,7 +5,8 @@ enum class Tag : char
 	DEFAULT = '0',
 	PLAYER = 'P',
 	MOON = 'M',
-	DAMAGING = 'D'
+	DAMAGING = 'D',
+	IGNORE = 'I'
 };
 
 class UserData

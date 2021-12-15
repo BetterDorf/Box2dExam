@@ -1,6 +1,10 @@
 #pragma once
 #include <vector>
+
 #include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics/Font.hpp>
+#include <SFML/Graphics/Text.hpp>
+
 #include <box2d/b2_world.h>
 
 #include "Entity.h"
@@ -14,6 +18,11 @@ protected:
 private:
 	// The window ---------------------------------------------
 	sf::RenderWindow m_window;
+
+	//UI
+	sf::Font m_font;
+	sf::Text m_score_text;
+	sf::Text m_game_over_text;
 
 	std::vector<std::unique_ptr<Entity>> entities;
 	std::unique_ptr<Player> player;
