@@ -10,11 +10,12 @@ Entity::~Entity()
 	body_->GetWorld()->DestroyBody(body_);
 }
 
-void Entity::Init(const std::string& spritePath, float x, float y, Tag tag)
+void Entity::Init(float x, float y, const std::string& spritePath, Tag tag)
 {
-    //Get the instances
-    sf::Texture& text = Texture_manager::Get_instance()->Request_texture(spritePath);
+    //Get the instance
     Game* game = Game::GetInstance();
+
+    sf::Texture& text = Texture_manager::Get_instance()->Request_texture(spritePath);
 
     //Define sf texture
     setTexture(text);

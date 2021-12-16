@@ -13,8 +13,10 @@ constexpr double ROT_SPEED = 0.006;
 
 //Prevent enemies from spawning too close (squared)
 constexpr float NOSPAWN_RADIUS = 3.0f;
+constexpr int MAX_SPAWN_BUDGET = 7;
+constexpr float START_TIMER = 1.0f;
+constexpr float BASE_SPAWN_TIME = 5.0f;
+
 //Force when enemy is made
 constexpr float ENEMY_IMPULSE = 5.0f;
 constexpr float ENEMY_ACCEL = 0.05f;
-
-constexpr float BASE_SPAWN_TIME = 5.0f;

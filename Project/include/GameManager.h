@@ -10,7 +10,7 @@ class GameManager //Singleton
 {
 	//Decide and call the other spawn functions then reset the timer
 	void GenericSpawn(); 
-	void SpawnEnemyShip(const int& num);
+	void SpawnEnemyShip();
 
 	b2Vec2 GenerateSpawnPosition();
 
@@ -28,7 +28,7 @@ class GameManager //Singleton
 	//The timer is set to time between spawn multiplied by the spawnee's mod
 	float timeBetweenSpawn = BASE_SPAWN_TIME;
 	float shipMod = 0.5f;
-	float timer = 1.0f;
+	float timer = START_TIMER;
 	float spawnIncrease = 1.01f;
 
 	static GameManager* instance;
@@ -41,6 +41,7 @@ public:
 	//Check if the game has ended
 	bool IsGameOver() const;
 	void GameOver();
+	void Reset();
 	
 	int GetScore() const;
 

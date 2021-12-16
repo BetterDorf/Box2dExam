@@ -3,9 +3,9 @@
 
 #include "game.h"
 
-void DamagingEntity::Init(const std::string& spritePath, float x, float y, Tag tag)
+void DamagingEntity::Init(float x, float y, const std::string& spritePath, Tag tag)
 {
-	Entity::Init(spritePath, x, y, tag);
+	Entity::Init(x, y, spritePath, tag);
 
 	b2Vec2 destination = Game::GetInstance()->GetPlayerPos() - body_->GetPosition();
 	destination.Normalize();

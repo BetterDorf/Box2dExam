@@ -45,20 +45,20 @@ void GameManager::GenericSpawn()
 		return;
 
 	//Randomly decide a "budget" for the wave
-	int budget = rand() % 10 + 1;
+	int budget = rand() % MAX_SPAWN_BUDGET + 1;
 
 	for (int i = 0; i < budget ; i++)
-		SpawnEnemyShip(rand() % 10 + 1);
+		SpawnEnemyShip();
 }
 
-void GameManager::SpawnEnemyShip(const int& num)
+void GameManager::SpawnEnemyShip()
 {
 	b2Vec2 pos = GenerateSpawnPosition();
 
 	score++;
 	
 	std::unique_ptr<DamagingEntity> uPtr = std::make_unique<DamagingEntity>(curId++);
-	uPtr->Init("data/StarShip.png", pos.x, pos.y, Tag::DAMAGING);
+	uPtr->Init(pos.x, pos.y, "data/StarShip.png", Tag::DAMAGING);
 
 	Game::GetInstance()->GetEntities()->emplace_back(std::move(uPtr));
 
@@ -115,4 +115,12 @@ b2Vec2 GameManager::GenerateSpawnPosition()
 	} while ((Game::GetInstance()->GetPlayerPos() - pos).Length() < NOSPAWN_RADIUS);
 
 	return pos;
+}
+
+void GameManager::Reset()
+{
+	gameOver = false;
+	score = 0;
+	timeBetweenSpawn = BASE_SPAWN_TIME;
+	timer = START_TIMER;
 }

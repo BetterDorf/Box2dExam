@@ -15,6 +15,7 @@
 #include "GameManager.h"
 
 Game* Game::instance = nullptr;
+bool Game::gameStarted = false;
 
 Game::Game() :
 	m_gravity(0.0f, 0.0f),
@@ -25,11 +26,26 @@ Game::Game() :
 	srand(time(NULL));
 }
 
-void Game::init() {
-	m_window.create(sf::VideoMode(), "Némoz's game??", sf::Style::Fullscreen);
-	m_window.setMouseCursorVisible(false);
-	m_window.setVerticalSyncEnabled(true);
-	m_window.setFramerateLimit(60.0f);
+void Game::init()
+{
+	if(!gameStarted)
+	{
+		gameStarted = true;
+
+		m_window.create(sf::VideoMode(), "Némoz's game??", sf::Style::Fullscreen);
+		m_window.setMouseCursorVisible(false);
+		m_window.setVerticalSyncEnabled(true);
+		m_window.setFramerateLimit(60.0f);
+
+#pragma region Borders
+		//TODO refactor entity to allow spriteless entities or make a more base class that only implements physics
+		//b2BodyDef borderDef;
+#pragma endregion
+	}
+	else
+	{
+		GameManager::GetInstance()->Reset();
+	}
 
 #pragma region UI
 	//font
@@ -50,16 +66,11 @@ void Game::init() {
 	m_game_over_text.setPosition(m_window.getSize().x / 10.0f, m_window.getSize().y / 2.0f);
 #pragma endregion
 
-#pragma region Borders
-
-#pragma endregion
-
-
 #pragma region PlayerCreation
 	//Create the player
 	player = std::make_unique<Player>();
-	player->Init("data/Ship.png", pixelsToMeters(m_window.getSize().x / 2.0f),
-		pixelsToMeters(m_window.getSize().y / 2.0f), Tag::PLAYER);
+	player->Init(pixelsToMeters(m_window.getSize().x / 2.0f),
+		pixelsToMeters(m_window.getSize().y / 2.0f), "data/Ship.png", Tag::PLAYER);
 
 	//Define the joint used by all of rope link
 	b2RevoluteJointDef jointDef;
@@ -70,8 +81,8 @@ void Game::init() {
 	{
 		//Create and init a new rope
 		std::unique_ptr<Rope> newRope = std::make_unique<Rope>();
-		newRope->Init("data/Chain.png", pixelsToMeters(m_window.getSize().x / 2.0f),
-			pixelsToMeters(m_window.getSize().y / 2.0f), Tag::IGNORE);
+		newRope->Init(pixelsToMeters(m_window.getSize().x / 2.0f),
+			pixelsToMeters(m_window.getSize().y / 2.0f), "data/Chain.png", Tag::IGNORE);
 
 		//Set the new rope as the second body to attach
 		jointDef.bodyB = newRope->GetBody(); 
@@ -92,8 +103,8 @@ void Game::init() {
 
 	//Add the moon
 	std::unique_ptr<Moon> moon = std::make_unique<Moon>();
-	moon->Init("data/Moon.png", pixelsToMeters(m_window.getSize().x / 2.0f),
-		pixelsToMeters(m_window.getSize().y / 2.0f), Tag::MOON);
+	moon->Init(pixelsToMeters(m_window.getSize().x / 2.0f),
+		pixelsToMeters(m_window.getSize().y / 2.0f), "data/Moon.png", Tag::MOON);
 
 	jointDef.bodyB = moon->GetBody();
 	jointDef.localAnchorB = b2Vec2(pixelsToMeters(moon->getTextureRect().width) / 2.0f, 0);
@@ -150,8 +161,13 @@ void Game::loop()
 			}
 			if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space))
 			{
-				//TODO Make the game restart
-				CloseGame();
+				//Clear up last game
+				entities.clear();
+				player.reset();
+
+				//Startup new one
+				instance->init();
+				instance->loop();
 				return;
 			}
 		}

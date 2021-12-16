@@ -8,6 +8,7 @@
 
 class Game;
 
+//If given a texture, the instanc should be added to the entities vector
 class Entity : public sf::Sprite
 {
 protected:
@@ -22,7 +23,7 @@ public:
 	~Entity() override;
 
 	//Take the path of the image for the sprite as well as the box2d coordinates and optionnaly, a tag for collisions
-	virtual void Init(const std::string& spritePath, float x, float y, Tag tag = Tag::DEFAULT);
+	virtual void Init(float x, float y, const std::string& spritePath = "data/Rope.png", Tag tag = Tag::DEFAULT);
 	virtual void Update();
 
 	b2Body* GetBody() { return body_; }

@@ -14,6 +14,7 @@
 class Game { //Singleton
 protected:
 	static Game* instance;
+	static bool gameStarted;
 
 private:
 	// The window ---------------------------------------------
