@@ -15,6 +15,8 @@ public:
 	void Deccelerate();
 	void DeccelRotate();
 
+	void Update() override;
+
 protected:
 	void DefineFixture(const sf::Vector2u textureSize) override;
 

@@ -60,7 +60,7 @@ void Entity::DefineFixture(const sf::Vector2u textureSize)
 
 void Entity::Update()
 {
-	setPosition(metersToPixels(body_->GetPosition()));
+	setPosition(metersToPixelsCoord(body_->GetPosition(), Game::GetInstance()->getWindow().getSize()));
     setRotation(-radToDeg(body_->GetAngle()));
 }
 

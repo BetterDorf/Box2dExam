@@ -31,12 +31,12 @@ float radToDeg(float radians_) {
 
 b2Vec2 pixelsToMeters(sf::Vector2f pixels)
 {
-    return b2Vec2(pixels.x / pixelsMetersRatio, (720 - pixels.y) / pixelsMetersRatio);
+    return b2Vec2(pixels.x / pixelsMetersRatio, (pixels.y) / pixelsMetersRatio);
 }
 
 b2Vec2 pixelsToMeters(sf::Vector2u pixels)
 {
-    return b2Vec2(pixels.x / pixelsMetersRatio, (720 - pixels.y) / pixelsMetersRatio);
+    return b2Vec2(pixels.x / pixelsMetersRatio, (pixels.y) / pixelsMetersRatio);
 }
 
 float pixelsToMeters(float pixels)
@@ -46,7 +46,13 @@ float pixelsToMeters(float pixels)
 
 sf::Vector2f metersToPixels(b2Vec2 meters)
 {
-    return sf::Vector2f(meters.x * pixelsMetersRatio, 720 - meters.y * pixelsMetersRatio);
+    return sf::Vector2f(meters.x * pixelsMetersRatio, meters.y * pixelsMetersRatio);
+}
+
+//Used to obtain sfml coordinates from box2d coordinates
+sf::Vector2f metersToPixelsCoord(b2Vec2 meters, sf::Vector2u windowSize)
+{
+    return sf::Vector2f(meters.x * pixelsMetersRatio,  windowSize.y - meters.y * pixelsMetersRatio);
 }
 
 float metersToPixels(float meters)

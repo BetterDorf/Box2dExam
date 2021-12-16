@@ -37,10 +37,6 @@ void Game::init()
 		m_window.setVerticalSyncEnabled(true);
 		m_window.setFramerateLimit(60.0f);
 
-#pragma region Borders
-		//TODO refactor entity to allow spriteless entities or make a more base class that only implements physics
-		//b2BodyDef borderDef;
-#pragma endregion
 	}
 	else
 	{

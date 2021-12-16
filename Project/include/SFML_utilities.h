@@ -28,6 +28,7 @@ b2Vec2 pixelsToMeters(sf::Vector2f pixels);
 b2Vec2 pixelsToMeters(sf::Vector2u pixels);
 float pixelsToMeters(float pixels);
 sf::Vector2f metersToPixels(b2Vec2 meters);
+sf::Vector2f metersToPixelsCoord(b2Vec2 meters, sf::Vector2u windowSize);
 float metersToPixels(float meters);
 
 
