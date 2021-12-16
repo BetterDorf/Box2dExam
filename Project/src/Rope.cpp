@@ -9,7 +9,7 @@ void Rope::DefineFixture(const b2Vec2 textureSize)
     ropeFixtureDef.shape = &hitBox;
     ropeFixtureDef.density = 0.4f;
     ropeFixtureDef.friction = 0.0f;
-    ropeFixtureDef.isSensor = true;
+    //ropeFixtureDef.isSensor = true;
 
     body_->CreateFixture(&ropeFixtureDef);
 }

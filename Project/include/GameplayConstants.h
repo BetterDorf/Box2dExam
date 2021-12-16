@@ -16,3 +16,5 @@ constexpr float NOSPAWN_RADIUS = 3.0f;
 //Force when enemy is made
 constexpr float ENEMY_IMPULSE = 5.0f;
 constexpr float ENEMY_ACCEL = 0.05f;
+
+constexpr float BASE_SPAWN_TIME = 5.0f;

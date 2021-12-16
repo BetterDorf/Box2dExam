@@ -19,7 +19,7 @@ protected:
 	virtual void Die();
 public:
 	Entity() = default;
-	~Entity();
+	~Entity() override;
 
 	//Take the path of the image for the sprite as well as the box2d coordinates and optionnaly, a tag for collisions
 	virtual void Init(const std::string& spritePath, float x, float y, Tag tag = Tag::DEFAULT);

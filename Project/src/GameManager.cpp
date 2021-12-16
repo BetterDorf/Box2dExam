@@ -29,12 +29,9 @@ void GameManager::Update(sf::Time time)
 		auto it = std::remove_if(entities->begin(), entities->end(),
 		[&](const std::unique_ptr<Entity>& entity)
 			{ for (const auto& id : deadIds) { if (entity->GetId() == id) return true; } return false; });
-		 
-		//Kill and free the memory for each dead entity found
-		std::for_each(it, entities->end(),
-			[](std::unique_ptr<Entity>& entity) { entity.release(); });
 
-		//Clean them from the game's vector of entities
+		//Erase them from the game's vector of entities
+		//Since those are smart pointers, when they are erased they will delete the entity
 		entities->erase(it, entities->end());
 
 		deadIds.clear();
@@ -48,23 +45,25 @@ void GameManager::GenericSpawn()
 		return;
 
 	//For now, only spawn enemy ships
-	SpawnEnemyShip(1);
-	timer = timeBetweenSpawn * shipMod;
-	timeBetweenSpawn /= spawnIncrease;
+	SpawnEnemyShip(rand() % 10 + 1);
 }
 
 void GameManager::SpawnEnemyShip(const int& num)
 {
-	score++;
-
-	b2Vec2 pos = GenerateSpawnPosition();
+	b2Vec2 pos;
 
 	for (int i = 0 ; i < num ; i++)
 	{
+		score++;
+		pos = GenerateSpawnPosition();
 		std::unique_ptr<DamagingEntity> uPtr = std::make_unique<DamagingEntity>(curId++);
 		uPtr->Init("data/StarShip.png", pos.x, pos.y, Tag::DAMAGING);
 
 		Game::GetInstance()->GetEntities()->emplace_back(std::move(uPtr));
+
+		//Handle timer modifs
+		timer += timeBetweenSpawn * shipMod;
+		timeBetweenSpawn /= spawnIncrease;
 	}
 }
 
@@ -112,7 +111,7 @@ b2Vec2 GameManager::GenerateSpawnPosition()
 
 	do
 	{
-		pos = b2Vec2(pixelsToMeters(rand() % maxX), pixelsToMeters(rand() % maxY));
+		pos = b2Vec2(pixelsToMeters(sf::Vector2f(static_cast<float>(rand() % maxX), static_cast<float>(rand() % maxY))));
 	} while ((Game::GetInstance()->GetPlayerPos() - pos).Length() < NOSPAWN_RADIUS);
 
 	return pos;

@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Window.hpp>
 #include <box2d/b2_math.h>
+#include "GameplayConstants.h"
 
 //Game manager manages everything that happens game-wise :
 // It handles Spawning, scoring
@@ -25,7 +26,7 @@ class GameManager //Singleton
 	std::vector<int> deadIds;
 
 	//The timer is set to time between spawn multiplied by the spawnee's mod
-	float timeBetweenSpawn = 5.0f;
+	float timeBetweenSpawn = BASE_SPAWN_TIME;
 	float shipMod = 0.5f;
 	float timer = 1.0f;
 	float spawnIncrease = 1.01f;

@@ -22,10 +22,10 @@ void DamagingEntity::DefineFixture(const b2Vec2 textureSize)
     b2FixtureDef enemyFixtureDef;
     enemyFixtureDef.shape = &hitBox;
     enemyFixtureDef.friction = 0.0f;
-    enemyFixtureDef.restitution = 0.0f;
+    enemyFixtureDef.restitution = 1.0f;
     enemyFixtureDef.density = 1.0f;
 
-    body_->SetLinearDamping(0.1);
+    body_->SetLinearDamping(0.1f);
     body_->CreateFixture(&enemyFixtureDef);
 }
 
