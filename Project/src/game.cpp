@@ -27,6 +27,7 @@ Game::Game() :
 
 void Game::init() {
 	m_window.create(sf::VideoMode(), "Némoz's game??", sf::Style::Fullscreen);
+	m_window.setMouseCursorVisible(false);
 	m_window.setVerticalSyncEnabled(true);
 	m_window.setFramerateLimit(60.0f);
 

@@ -44,27 +44,27 @@ void GameManager::GenericSpawn()
 	if (gameOver)
 		return;
 
-	//For now, only spawn enemy ships
-	SpawnEnemyShip(rand() % 10 + 1);
+	//Randomly decide a "budget" for the wave
+	int budget = rand() % 10 + 1;
+
+	for (int i = 0; i < budget ; i++)
+		SpawnEnemyShip(rand() % 10 + 1);
 }
 
 void GameManager::SpawnEnemyShip(const int& num)
 {
-	b2Vec2 pos;
+	b2Vec2 pos = GenerateSpawnPosition();
 
-	for (int i = 0 ; i < num ; i++)
-	{
-		score++;
-		pos = GenerateSpawnPosition();
-		std::unique_ptr<DamagingEntity> uPtr = std::make_unique<DamagingEntity>(curId++);
-		uPtr->Init("data/StarShip.png", pos.x, pos.y, Tag::DAMAGING);
+	score++;
+	
+	std::unique_ptr<DamagingEntity> uPtr = std::make_unique<DamagingEntity>(curId++);
+	uPtr->Init("data/StarShip.png", pos.x, pos.y, Tag::DAMAGING);
 
-		Game::GetInstance()->GetEntities()->emplace_back(std::move(uPtr));
+	Game::GetInstance()->GetEntities()->emplace_back(std::move(uPtr));
 
-		//Handle timer modifs
-		timer += timeBetweenSpawn * shipMod;
-		timeBetweenSpawn /= spawnIncrease;
-	}
+	//Handle timer modifs
+	timer += timeBetweenSpawn * shipMod;
+	timeBetweenSpawn /= spawnIncrease;
 }
 
 
