@@ -7,8 +7,17 @@
 
 class Player : public Entity
 {
+public:
+	Player();
+
+	void Rotate(bool right);
+	void Accelerate();
+	void Deccelerate();
+	void DeccelRotate();
+
 protected:
 	void DefineFixture(const b2Vec2 textureSize) override;
+
 private:
 	const float speed = 1.0f;
 	const float max_speed = MAX_SPEED;
@@ -19,11 +28,4 @@ private:
 	const float moving_damp = 0.5f;
 	const float stopped_damp = 4.0f;
 
-public:
-	Player() = default;
-
-	void Rotate(bool right);
-	void Accelerate();
-	void Deccelerate();
-	void DeccelRotate();
 }; 

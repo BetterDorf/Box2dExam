@@ -1,7 +1,12 @@
 #include "Player.h"
 
-#include <iostream>
 #include <SFML_utilities.h>
+
+Player::Player() : Entity(CollisionTag::PLAYER)
+{
+	
+}
+
 
 void Player::Rotate(bool right)
 {

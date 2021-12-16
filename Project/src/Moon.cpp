@@ -1,5 +1,10 @@
 #include "Moon.h"
 
+Moon::Moon() : Entity(CollisionTag::MOON)
+{
+	
+}
+
 void Moon::DefineFixture(const b2Vec2 textureSize)
 {
     b2CircleShape hitBox;

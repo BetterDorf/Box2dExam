@@ -28,7 +28,15 @@ void GameManager::Update(sf::Time time)
 		//Move all entities that died to the end of the vector
 		auto it = std::remove_if(entities->begin(), entities->end(),
 		[&](const std::unique_ptr<Entity>& entity)
-			{ for (const auto& id : deadIds) { if (entity->GetId() == id) return true; } return false; });
+			{
+				for (const auto& id : deadIds)
+				{
+					if(auto damaging = static_cast<DamagingEntity*>(entity.get()))
+					if (damaging->GetId() == id) 
+						return true;
+				}
+				return false;
+			});
 
 		//Erase them from the game's vector of entities
 		//Since those are smart pointers, when they are erased they will delete the entity
@@ -58,7 +66,7 @@ void GameManager::SpawnEnemyShip()
 	score++;
 	
 	std::unique_ptr<DamagingEntity> uPtr = std::make_unique<DamagingEntity>(curId++);
-	uPtr->Init(pos.x, pos.y, "data/StarShip.png", Tag::DAMAGING);
+	uPtr->Init(pos.x, pos.y, "data/StarShip.png");
 
 	Game::GetInstance()->GetEntities()->emplace_back(std::move(uPtr));
 

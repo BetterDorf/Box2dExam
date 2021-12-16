@@ -1,11 +1,11 @@
 #include "UserData.h"
 
-Tag UserData::GetTag()
+CollisionTag UserData::GetCollisionTag()
 {
-	return tag_;
+	return collisionTag_;
 }
 
 UserData::UserData()
 {
-	tag_ = Tag::DEFAULT;
+	collisionTag_ = CollisionTag::DEFAULT;
 }

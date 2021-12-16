@@ -70,7 +70,7 @@ void Game::init()
 	//Create the player
 	player = std::make_unique<Player>();
 	player->Init(pixelsToMeters(m_window.getSize().x / 2.0f),
-		pixelsToMeters(m_window.getSize().y / 2.0f), "data/Ship.png", Tag::PLAYER);
+		pixelsToMeters(m_window.getSize().y / 2.0f), "data/Ship.png");
 
 	//Define the joint used by all of rope link
 	b2RevoluteJointDef jointDef;
@@ -80,9 +80,9 @@ void Game::init()
 	for (int i = 0 ; i < CHAIN_LENGTH ; i++)
 	{
 		//Create and init a new rope
-		std::unique_ptr<Rope> newRope = std::make_unique<Rope>();
+		std::unique_ptr<Rope> newRope = std::make_unique<Rope>(CollisionTag::IGNORE);
 		newRope->Init(pixelsToMeters(m_window.getSize().x / 2.0f),
-			pixelsToMeters(m_window.getSize().y / 2.0f), "data/Chain.png", Tag::IGNORE);
+			pixelsToMeters(m_window.getSize().y / 2.0f), "data/Chain.png");
 
 		//Set the new rope as the second body to attach
 		jointDef.bodyB = newRope->GetBody(); 
@@ -104,7 +104,7 @@ void Game::init()
 	//Add the moon
 	std::unique_ptr<Moon> moon = std::make_unique<Moon>();
 	moon->Init(pixelsToMeters(m_window.getSize().x / 2.0f),
-		pixelsToMeters(m_window.getSize().y / 2.0f), "data/Moon.png", Tag::MOON);
+		pixelsToMeters(m_window.getSize().y / 2.0f), "data/Moon.png");
 
 	jointDef.bodyB = moon->GetBody();
 	jointDef.localAnchorB = b2Vec2(pixelsToMeters(moon->getTextureRect().width) / 2.0f, 0);

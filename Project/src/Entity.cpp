@@ -4,16 +4,22 @@
 #include "game.h"
 #include "Texture_manager.h"
 
+Entity::Entity(CollisionTag tag)
+{
+    userData_.SetCollisionTag(tag);
+}
+
+
 Entity::~Entity()
 {
     Die();
 	body_->GetWorld()->DestroyBody(body_);
 }
 
-void Entity::Init(float x, float y, const std::string& spritePath, Tag tag)
+void Entity::Init(float x, float y, const std::string& spritePath)
 {
     //Get the instance
-    Game* game = Game::GetInstance();
+    Game* game = Game::GetInstance(); 
 
     sf::Texture& text = Texture_manager::Get_instance()->Request_texture(spritePath);
 
@@ -36,9 +42,6 @@ void Entity::Init(float x, float y, const std::string& spritePath, Tag tag)
     //Create the fixture
 	DefineFixture(b2Vec2(pixelsToMeters(text.getSize().x),
         pixelsToMeters(text.getSize().y)));
-
-    //Change the user data
-    userData_.SetTag(tag);
 }
 
 void Entity::DefineFixture(const b2Vec2 textureSize)

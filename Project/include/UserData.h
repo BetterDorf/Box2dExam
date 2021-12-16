@@ -1,6 +1,6 @@
 #pragma once
 
-enum class Tag : char
+enum class CollisionTag : char
 {
 	DEFAULT = '0',
 	PLAYER = 'P',
@@ -13,8 +13,8 @@ class UserData
 {
 public:
 	UserData();
-	Tag GetTag();
-	void SetTag(Tag tag) { tag_ = tag; }
+	CollisionTag GetCollisionTag();
+	void SetCollisionTag(CollisionTag collisionTag) { collisionTag_ = collisionTag; }
 private:
-	Tag tag_ = Tag::DEFAULT;
+	CollisionTag collisionTag_ = CollisionTag::DEFAULT;
 };
