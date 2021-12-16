@@ -2,6 +2,7 @@
 #include "GameplayConstants.h"
 
 #include "game.h"
+#include "SFML_Utilities.h"
 
 DamagingEntity::DamagingEntity(int id) : Entity(CollisionTag::DAMAGING), id_(id)
 {
@@ -25,10 +26,10 @@ void DamagingEntity::Init(float x, float y, const std::string& spritePath)
 	body_->ApplyForceToCenter(destination, true);
 }
 
-void DamagingEntity::DefineFixture(const b2Vec2 textureSize)
+void DamagingEntity::DefineFixture(const sf::Vector2u textureSize)
 {
     b2PolygonShape hitBox;
-    hitBox.SetAsBox(0.5f * textureSize.x, 0.5f * textureSize.y);
+    hitBox.SetAsBox(0.5f * pixelsToMeters(textureSize.x), 0.5f * pixelsToMeters(textureSize.y));
 
     b2FixtureDef enemyFixtureDef;
     enemyFixtureDef.shape = &hitBox;

@@ -16,7 +16,7 @@ public:
 	void DeccelRotate();
 
 protected:
-	void DefineFixture(const b2Vec2 textureSize) override;
+	void DefineFixture(const sf::Vector2u textureSize) override;
 
 private:
 	const float speed = 1.0f;

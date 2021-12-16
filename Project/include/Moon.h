@@ -8,5 +8,5 @@ public:
     Moon();
 
 protected:
-    virtual void DefineFixture(const b2Vec2 textureSize) override;
+    virtual void DefineFixture(const sf::Vector2u textureSize) override;
 };

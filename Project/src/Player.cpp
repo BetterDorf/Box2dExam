@@ -45,10 +45,10 @@ void Player::DeccelRotate()
 	body_->SetAngularDamping(stopped_damp);
 }
 
-void Player::DefineFixture(const b2Vec2 textureSize)
+void Player::DefineFixture(const sf::Vector2u textureSize)
 {
 	b2CircleShape hitBox;
-	hitBox.m_radius = textureSize.x / 3.0f;
+	hitBox.m_radius = pixelsToMeters(textureSize.x) / 3.0f;
 
 	b2FixtureDef playerFixtureDef;
 	playerFixtureDef.shape = &hitBox;

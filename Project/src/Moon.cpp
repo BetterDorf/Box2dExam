@@ -1,14 +1,16 @@
 #include "Moon.h"
 
+#include "SFML_Utilities.h"
+
 Moon::Moon() : Entity(CollisionTag::MOON)
 {
 	
 }
 
-void Moon::DefineFixture(const b2Vec2 textureSize)
+void Moon::DefineFixture(const sf::Vector2u textureSize)
 {
     b2CircleShape hitBox;
-    hitBox.m_radius = textureSize.x * 0.5f;
+    hitBox.m_radius = pixelsToMeters(textureSize.x) * 0.5f;
 
     b2FixtureDef playerFixtureDef;
     playerFixtureDef.shape = &hitBox;

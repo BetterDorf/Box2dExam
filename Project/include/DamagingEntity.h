@@ -9,7 +9,7 @@ public:
 	int GetId();
 
 	void Init(float x, float y, const std::string& spritePath = "data/Rope.png") override;
-	void DefineFixture(const b2Vec2 textureSize) override;
+	void DefineFixture(const sf::Vector2u textureSize) override;
 	void Update() override;
 
 private:

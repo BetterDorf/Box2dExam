@@ -37,17 +37,16 @@ void Entity::Init(float x, float y, const std::string& spritePath)
     bodyDef.linearDamping = 0.75f;
 
     bodyDef.userData.pointer = reinterpret_cast<uintptr_t>(this); //The userData pointer point to this object
-    body_ = game->getWorld().CreateBody(&bodyDef);
+    body_ = game->getWorld().CreateBody(&bodyDef); 
 
-    //Create the fixture
-	DefineFixture(b2Vec2(pixelsToMeters(text.getSize().x),
-        pixelsToMeters(text.getSize().y)));
+    //Create the fixture 
+	DefineFixture(text.getSize());
 }
 
-void Entity::DefineFixture(const b2Vec2 textureSize)
+void Entity::DefineFixture(const sf::Vector2u textureSize)
 {
     b2PolygonShape hitBox;
-    hitBox.SetAsBox(0.5f * textureSize.x, 0.5f * textureSize.y);
+    hitBox.SetAsBox(pixelsToMeters(textureSize.x) * 0.5f, pixelsToMeters(textureSize.y) * 0.5f);
 
     b2FixtureDef playerFixtureDef;
     playerFixtureDef.shape = &hitBox;

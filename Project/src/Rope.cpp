@@ -1,9 +1,11 @@
 #include "Rope.h"
 
-void Rope::DefineFixture(const b2Vec2 textureSize)
+#include "SFML_Utilities.h"
+
+void Rope::DefineFixture(const sf::Vector2u textureSize)
 {
     b2PolygonShape hitBox;
-    hitBox.SetAsBox(0.5f * textureSize.x, 0.5f * textureSize.y);
+    hitBox.SetAsBox(0.5f * pixelsToMeters(textureSize.x), 0.5f * pixelsToMeters(textureSize.y));
 
     b2FixtureDef ropeFixtureDef;
     ropeFixtureDef.shape = &hitBox;
