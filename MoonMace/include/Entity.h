@@ -13,7 +13,7 @@ class Game;
 class Entity : public sf::Sprite
 {
 public:
-	Entity(CollisionTag tag);
+	Entity(CollisionTag tag, Game& gameRef);
 	~Entity() override;
 
 	//Take the path of the image for the sprite as well as the box2d coordinates and optionnaly, a tag for collisions
@@ -24,6 +24,8 @@ public:
 	UserData* GetData() { return  &userData_; }
 
 protected:
+	Game& gameRef_;
+
 	UserData userData_;
 	b2Body* body_ = nullptr;
 	virtual void DefineFixture(const sf::Vector2u textureSize);

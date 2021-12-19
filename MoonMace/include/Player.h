@@ -1,14 +1,15 @@
 #pragma once
 
 #include "Entity.h"
+#include "GameplayConstants.h"
+
 #define _USE_MATH_DEFINES
 #include <math.h>
-#include "GameplayConstants.h"
 
 class Player : public Entity
 {
 public:
-	Player();
+	Player(Game& gameRef);
 
 	void Init(float x, float y, const SpritePath& spritePath = SpritePath::Player) override { Entity::Init(x, y, spritePath); }
 	void Rotate(bool right);

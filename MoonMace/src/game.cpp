@@ -1,4 +1,4 @@
-#include "game.h"
+#include "Game.h"
 
 #include <random>
 #include <time.h>
@@ -12,17 +12,12 @@
 
 #include "Moon.h"
 #include "Rope.h"
-#include "GameManager.h"
 
-Game* Game::instance = nullptr;
 bool Game::gameStarted = false;
 
-Game::Game() :
-	m_gravity(0.0f, 0.0f),
-	m_world(m_gravity)
+Game::Game() : m_gravity(0.0f, 0.0f), m_world(m_gravity), gameManager_(*this)
 {
 	m_world.SetContactListener(&contact_listener_);
-	instance = this;
 	srand(time(NULL));
 }
 
@@ -64,7 +59,7 @@ void Game::init()
 
 #pragma region PlayerCreation
 	//Create the player
-	player = std::make_unique<Player>();
+	player = std::make_unique<Player>(*this);
 	player->Init(pixelsToMeters(m_window.getSize().x / 2.0f),
 		pixelsToMeters(m_window.getSize().y / 2.0f));
 
@@ -76,7 +71,7 @@ void Game::init()
 	for (int i = 0 ; i < CHAIN_LENGTH ; i++)
 	{
 		//Create and init a new rope
-		std::unique_ptr<Rope> newRope = std::make_unique<Rope>(CollisionTag::IGNORE);
+		std::unique_ptr<Rope> newRope = std::make_unique<Rope>(*this);
 		newRope->Init(pixelsToMeters(m_window.getSize().x / 2.0f),
 			pixelsToMeters(m_window.getSize().y / 2.0f));
 
@@ -98,7 +93,7 @@ void Game::init()
 	}
 
 	//Add the moon
-	std::unique_ptr<Moon> moon = std::make_unique<Moon>();
+	std::unique_ptr<Moon> moon = std::make_unique<Moon>(*this);
 	moon->Init(pixelsToMeters(m_window.getSize().x / 2.0f),
 		pixelsToMeters(m_window.getSize().y / 2.0f));
 
@@ -162,8 +157,8 @@ void Game::loop()
 				player.reset();
 
 				//Startup new one
-				instance->init();
-				instance->loop();
+				this->init();
+				this->loop();
 				return;
 			}
 		}

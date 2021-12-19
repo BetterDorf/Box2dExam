@@ -4,23 +4,18 @@
 
 Texture_manager* Texture_manager::instance_ = nullptr;
 
-Texture_manager* Texture_manager::Get_instance()
+Texture_manager::Texture_manager()
 {
-	if (instance_ == nullptr)
-	{
-		instance_ = new Texture_manager();
-	}
-
-	return instance_;
+	instance_ = this;
 }
+
 
 sf::Texture& Texture_manager::Request_texture(const SpritePath& path)
 {
 	std::string texture_path = ConvertPathToString(path);
 
 	//Check if we have the texture loaded
-	if (!textures_.contains(texture_path))
-	{
+	if (!textures_.contains(texture_path)) 	{
 		//If not, we load it and return the texture
 		sf::Texture texture;
 		texture.loadFromFile(texture_path);

@@ -2,6 +2,12 @@
 
 #include "SFML_Utilities.h"
 
+Rope::Rope(Game& gameRef) : Entity(CollisionTag::IGNORE, gameRef)
+{
+	
+}
+
+
 void Rope::DefineFixture(const sf::Vector2u textureSize)
 {
     b2PolygonShape hitBox;

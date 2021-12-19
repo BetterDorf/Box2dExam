@@ -2,7 +2,7 @@
 
 #include "SFML_Utilities.h"
 
-Moon::Moon() : Entity(CollisionTag::MOON)
+Moon::Moon(Game& gameRef) : Entity(CollisionTag::MOON, gameRef)
 {
 	
 }

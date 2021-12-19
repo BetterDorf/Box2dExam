@@ -4,17 +4,14 @@
 
 class Texture_manager
 {
-protected:
-	Texture_manager() = default;
-	std::map<std::string, sf::Texture> textures_;
-	static Texture_manager* instance_;
-
 public:
-    //Singletons should not be cloneable.
-        Texture_manager(Texture_manager& other) = delete;
-	//Singletons should not be assignable.
-		void operator=(const Texture_manager&) = delete;
+	Texture_manager();
 
 	sf::Texture& Request_texture(const SpritePath&);
-	static Texture_manager* Get_instance();
+	static Texture_manager* Get_instance() { return instance_; }
+
+protected:
+	std::map<std::string, sf::Texture> textures_;
+
+	static Texture_manager* instance_;
 };

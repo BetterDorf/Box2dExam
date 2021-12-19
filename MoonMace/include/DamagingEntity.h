@@ -4,7 +4,7 @@
 class DamagingEntity : public Entity
 {
 public:
-	DamagingEntity(int id);
+	DamagingEntity(Game& gameRef, int id);
 
 	int GetId();
 

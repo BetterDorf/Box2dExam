@@ -1,10 +1,10 @@
 #include "DamagingEntity.h"
 #include "GameplayConstants.h"
 
-#include "game.h"
+#include "Game.h"
 #include "SFML_Utilities.h"
 
-DamagingEntity::DamagingEntity(int id) : Entity(CollisionTag::DAMAGING), id_(id)
+DamagingEntity::DamagingEntity(Game& gameRef, int id) : Entity(CollisionTag::DAMAGING, gameRef), id_(id)
 {
 	
 }
@@ -19,7 +19,7 @@ void DamagingEntity::Init(float x, float y, const SpritePath& spritePath)
 {
 	Entity::Init(x, y, spritePath);
 
-	b2Vec2 destination = Game::GetInstance()->GetPlayerPos() - body_->GetPosition();
+	b2Vec2 destination = gameRef_.GetPlayerPos() - body_->GetPosition();
 	destination.Normalize();
 
 	destination *= ENEMY_IMPULSE;
@@ -46,7 +46,7 @@ void DamagingEntity::Update()
     Entity::Update();
 
     //Apply force each frame
-    b2Vec2 destination = Game::GetInstance()->GetPlayerPos() - body_->GetPosition();
+    b2Vec2 destination = gameRef_.GetPlayerPos() - body_->GetPosition();
     destination.Normalize();
 
     destination *= ENEMY_ACCEL;

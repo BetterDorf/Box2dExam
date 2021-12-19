@@ -5,7 +5,7 @@
 
 #include "game.h"
 
-Player::Player() : Entity(CollisionTag::PLAYER)
+Player::Player(Game& gameRef) : Entity(CollisionTag::PLAYER, gameRef)
 {}
 
 
@@ -14,7 +14,7 @@ void Player::Update()
 	Entity::Update();
 
 	//Prevent the player from going out of the map by making him bounce
-	b2Vec2 window = pixelsToMeters(Game::GetInstance()->getWindow().getSize());
+	b2Vec2 window = pixelsToMeters(gameRef_.getWindow().getSize());
 	b2Vec2 pos = body_->GetPosition();
 	b2Vec2 veloc = body_->GetLinearVelocity();
 

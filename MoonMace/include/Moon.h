@@ -5,7 +5,7 @@
 class Moon : public Entity
 {
 public:
-    Moon();
+    Moon(Game& gameRef);
     void Init(float x, float y, const SpritePath& spritePath = SpritePath::Moon) override { Entity::Init(x, y, spritePath); }
 
 protected:

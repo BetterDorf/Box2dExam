@@ -10,34 +10,12 @@
 #include "Entity.h"
 #include "Player.h"
 #include "MyContactListener.h"
+#include "GameManager.h"
+#include "Texture_manager.h"
 
-class Game { //Singleton
-protected:
-	static Game* instance;
-	static bool gameStarted;
-
-private:
-	// The window ---------------------------------------------
-	sf::RenderWindow m_window;
-
-	//UI
-	sf::Font m_font;
-	sf::Text m_score_text;
-	sf::Text m_game_over_text;
-
-	std::vector<std::unique_ptr<Entity>> entities;
-	std::unique_ptr<Player> player;
-
-	// The physical world -------------------------------------
-	b2Vec2 m_gravity;
-	b2World m_world;
-	MyContactListener contact_listener_;
-
-	void CloseGame();
-
+class Game {
 public:
 	//No need to check or set the instance, it is guaranteed to be set in the constructor beforehand
-	static Game* GetInstance() { return instance; }
 	std::vector<std::unique_ptr<Entity>>* GetEntities() { return &entities; }
 	b2Vec2 GetPlayerPos() { return player->GetBody()->GetPosition(); }
 
@@ -47,4 +25,31 @@ public:
 
 	b2World& getWorld() { return m_world; }
 	sf::RenderWindow& getWindow() { return  m_window; }
+
+protected:
+	static bool gameStarted;
+
+private:
+	//Managers
+	GameManager gameManager_;
+	Texture_manager textureManager_;
+
+	// The window ---------------------------------------------
+	sf::RenderWindow m_window;
+
+	//UI
+	sf::Font m_font;
+	sf::Text m_score_text;
+	sf::Text m_game_over_text;
+
+	//Entities
+	std::vector<std::unique_ptr<Entity>> entities;
+	std::unique_ptr<Player> player;
+
+	// The physical world -------------------------------------
+	b2Vec2 m_gravity;
+	b2World m_world;
+	MyContactListener contact_listener_;
+
+	void CloseGame();
 };

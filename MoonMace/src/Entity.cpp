@@ -4,7 +4,7 @@
 #include "game.h"
 #include "Texture_manager.h"
 
-Entity::Entity(CollisionTag tag)
+Entity::Entity(CollisionTag tag, Game& gameRef) : gameRef_(gameRef)
 {
     userData_.SetCollisionTag(tag);
 }
@@ -18,9 +18,6 @@ Entity::~Entity()
 
 void Entity::Init(float x, float y, const SpritePath& spritePath)
 {
-    //Get the instance
-    Game* game = Game::GetInstance(); 
-
     sf::Texture& text = Texture_manager::Get_instance()->Request_texture(spritePath);
 
     //Define sf texture
@@ -31,13 +28,13 @@ void Entity::Init(float x, float y, const SpritePath& spritePath)
     b2BodyDef bodyDef;
     bodyDef.fixedRotation = false;
     bodyDef.type = b2_dynamicBody;
-    b2Vec2 windowSize = pixelsToMeters(game->getWindow().getSize());
+    b2Vec2 windowSize = pixelsToMeters(gameRef_.getWindow().getSize());
     bodyDef.position.Set(x, y);
     bodyDef.angularDamping = 0.75f;
     bodyDef.linearDamping = 0.75f;
 
     bodyDef.userData.pointer = reinterpret_cast<uintptr_t>(this); //The userData pointer point to this object
-    body_ = game->getWorld().CreateBody(&bodyDef); 
+    body_ = gameRef_.getWorld().CreateBody(&bodyDef);
 
     //Create the fixture 
 	DefineFixture(text.getSize());
@@ -60,7 +57,7 @@ void Entity::DefineFixture(const sf::Vector2u textureSize)
 
 void Entity::Update()
 {
-	setPosition(metersToPixelsCoord(body_->GetPosition(), Game::GetInstance()->getWindow().getSize()));
+	setPosition(metersToPixelsCoord(body_->GetPosition(), gameRef_.getWindow().getSize()));
     setRotation(-radToDeg(body_->GetAngle()));
 }
 
