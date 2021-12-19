@@ -15,7 +15,7 @@ int DamagingEntity::GetId()
 }
 
 
-void DamagingEntity::Init(float x, float y, const std::string& spritePath)
+void DamagingEntity::Init(float x, float y, const SpritePath& spritePath)
 {
 	Entity::Init(x, y, spritePath);
 

@@ -66,7 +66,7 @@ void GameManager::SpawnEnemyShip()
 	score++;
 	
 	std::unique_ptr<DamagingEntity> uPtr = std::make_unique<DamagingEntity>(curId++);
-	uPtr->Init(pos.x, pos.y, "data/StarShip.png");
+	uPtr->Init(pos.x, pos.y, SpritePath::StarEnemy);
 
 	Game::GetInstance()->GetEntities()->emplace_back(std::move(uPtr));
 

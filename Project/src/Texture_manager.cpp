@@ -14,8 +14,10 @@ Texture_manager* Texture_manager::Get_instance()
 	return instance_;
 }
 
-sf::Texture& Texture_manager::Request_texture(const std::string &texture_path)
+sf::Texture& Texture_manager::Request_texture(const SpritePath& path)
 {
+	std::string texture_path = ConvertPathToString(path);
+
 	//Check if we have the texture loaded
 	if (!textures_.contains(texture_path))
 	{

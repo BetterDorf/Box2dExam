@@ -8,7 +8,7 @@ public:
 
 	int GetId();
 
-	void Init(float x, float y, const std::string& spritePath = "data/Rope.png") override;
+	void Init(float x, float y, const SpritePath& spritePath = SpritePath::StarEnemy) override;
 	void DefineFixture(const sf::Vector2u textureSize) override;
 	void Update() override;
 

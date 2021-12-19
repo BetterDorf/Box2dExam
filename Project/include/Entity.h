@@ -5,6 +5,7 @@
 #include <box2d/box2d.h>
 
 #include "UserData.h"
+#include "SpritePathes.h"
 
 class Game;
 
@@ -16,7 +17,7 @@ public:
 	~Entity() override;
 
 	//Take the path of the image for the sprite as well as the box2d coordinates and optionnaly, a tag for collisions
-	virtual void Init(float x, float y, const std::string& spritePath = "data/Rope.png");
+	virtual void Init(float x, float y, const SpritePath& spritePath);
 	virtual void Update();
 
 	b2Body* GetBody() { return body_; }

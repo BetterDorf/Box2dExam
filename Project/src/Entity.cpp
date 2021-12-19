@@ -16,7 +16,7 @@ Entity::~Entity()
 	body_->GetWorld()->DestroyBody(body_);
 }
 
-void Entity::Init(float x, float y, const std::string& spritePath)
+void Entity::Init(float x, float y, const SpritePath& spritePath)
 {
     //Get the instance
     Game* game = Game::GetInstance(); 

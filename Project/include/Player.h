@@ -10,6 +10,7 @@ class Player : public Entity
 public:
 	Player();
 
+	void Init(float x, float y, const SpritePath& spritePath = SpritePath::Player) override { Entity::Init(x, y, spritePath); }
 	void Rotate(bool right);
 	void Accelerate();
 	void Deccelerate();

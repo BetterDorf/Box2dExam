@@ -1,5 +1,6 @@
 #pragma once
 #include "SFML/Graphics.hpp"
+#include "SpritePathes.h"
 
 class Texture_manager
 {
@@ -14,6 +15,6 @@ public:
 	//Singletons should not be assignable.
 		void operator=(const Texture_manager&) = delete;
 
-	sf::Texture& Request_texture(const std::string &texture_path);
+	sf::Texture& Request_texture(const SpritePath&);
 	static Texture_manager* Get_instance();
 };
