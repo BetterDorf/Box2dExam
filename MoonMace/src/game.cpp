@@ -32,7 +32,7 @@ void Game::init()
 	{
 		gameStarted = true;
 
-		m_window.create(sf::VideoMode(), "Némoz's game??", sf::Style::Fullscreen);
+		m_window.create(sf::VideoMode::getFullscreenModes()[0], "Moon Mace", sf::Style::Fullscreen);
 		m_window.setMouseCursorVisible(false);
 		m_window.setVerticalSyncEnabled(true);
 		m_window.setFramerateLimit(60.0f);
@@ -45,7 +45,7 @@ void Game::init()
 
 #pragma region UI
 	//font
-	m_font.loadFromFile("data/upheavtt.ttf");
+	m_font.loadFromFile("data/Fonts/upheavtt.ttf");
 
 	//Score
 	m_score_text.setString("0");

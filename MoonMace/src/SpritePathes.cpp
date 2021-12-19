@@ -2,15 +2,17 @@
 
 std::string ConvertPathToString(SpritePath path)
 {
+	std::string base = "data/Sprites/";
+
 	switch (path)
 	{
 	case SpritePath::Player:
-		return "data/Ship.png";
+		return base + "Ship.png";
 	case SpritePath::StarEnemy:
-		return "data/StarShip.png";
+		return base + "StarShip.png";
 	case SpritePath::Chain:
-		return "data/Chain.png";
+		return base + "Chain.png";
 	case SpritePath::Moon:
-		return "data/Moon.png";
+		return base + "Moon.png";
 	}
 }
