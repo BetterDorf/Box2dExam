@@ -3,10 +3,10 @@
 
 #include "Game.h"
 #include "SFML_Utilities.h"
+#include "AudioManager.h"
 
 DamagingEntity::DamagingEntity(Game& gameRef, int id) : Entity(CollisionTag::DAMAGING, gameRef), id_(id)
 {
-	
 }
 
 int DamagingEntity::GetId()
@@ -24,6 +24,10 @@ void DamagingEntity::Init(float x, float y, const SpritePath& spritePath)
 
 	destination *= ENEMY_IMPULSE;
 	body_->ApplyForceToCenter(destination, true);
+
+    //Play the creation sound
+    sound_.setBuffer(AudioManager::GetInstance()->RequestBuffer(AudioPath::StarSpawn));
+    sound_.play();
 }
 
 void DamagingEntity::DefineFixture(const sf::Vector2u textureSize)

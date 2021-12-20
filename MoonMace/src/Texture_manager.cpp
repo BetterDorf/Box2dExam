@@ -10,7 +10,7 @@ Texture_manager::Texture_manager()
 }
 
 
-sf::Texture& Texture_manager::Request_texture(const SpritePath& path)
+sf::Texture& Texture_manager::Request_texture(const SpritePath path)
 {
 	std::string texture_path = ConvertPathToString(path);
 
@@ -21,8 +21,7 @@ sf::Texture& Texture_manager::Request_texture(const SpritePath& path)
 		texture.loadFromFile(texture_path);
 		if (texture.getSize().x == 0) //check for invalid path
 		{
-			std::cout << "Path is incorrect : " + texture_path;
-			throw std::invalid_argument("Path is incorrect : " + texture_path);
+			std::cerr << "Path is incorrect : " + texture_path;
 		}
 		textures_.emplace(texture_path, texture);
 	}

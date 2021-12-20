@@ -1,6 +1,9 @@
 #pragma once
 #include "Entity.h"
 
+#include <SFML/Audio/Sound.hpp>
+
+
 class DamagingEntity : public Entity
 {
 public:
@@ -14,4 +17,6 @@ public:
 
 private:
 	int id_;
+
+	sf::Sound sound_;
 };
