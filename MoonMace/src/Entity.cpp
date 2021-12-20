@@ -59,6 +59,23 @@ void Entity::Update()
 {
 	setPosition(metersToPixelsCoord(body_->GetPosition(), gameRef_.getWindow().getSize()));
     setRotation(-radToDeg(body_->GetAngle()));
+
+    //Prevent the entities from going out of the map by making them bounce
+    b2Vec2 window = pixelsToMeters(gameRef_.getWindow().getSize());
+    b2Vec2 pos = body_->GetPosition();
+    b2Vec2 veloc = body_->GetLinearVelocity();
+
+    //Distance to the edge when we bounce
+    float buffer = pixelsToMeters(getTextureRect().width) / 2.0f;
+
+    if ((pos.x > window.x && veloc.x > buffer) || (pos.x < buffer && veloc.x < 0))
+    {
+        body_->SetLinearVelocity(b2Vec2(-veloc.x, veloc.y));
+    }
+    if ((pos.y > window.y && veloc.y > buffer) || (pos.y < buffer && veloc.y < 0))
+    {
+        body_->SetLinearVelocity(b2Vec2(veloc.x, -veloc.y));
+    }
 }
 
 void Entity::Die()

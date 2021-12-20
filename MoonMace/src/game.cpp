@@ -32,6 +32,7 @@ void Game::init()
 		m_window.setVerticalSyncEnabled(true);
 		m_window.setFramerateLimit(60.0f);
 
+		audioManager_.PlayMusic();
 	}
 	else
 	{
@@ -47,6 +48,7 @@ void Game::init()
 	m_score_text.setFont(m_font);
 	m_score_text.setFillColor(sf::Color::White);
 	m_score_text.setCharacterSize(50);
+	m_score_text.setPosition(50, 50);
 	 
 	//GameOver
 	m_game_over_text.setString("GAME OVER");

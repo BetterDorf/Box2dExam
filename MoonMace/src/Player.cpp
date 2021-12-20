@@ -13,22 +13,7 @@ void Player::Update()
 {
 	Entity::Update();
 
-	//Prevent the player from going out of the map by making him bounce
-	b2Vec2 window = pixelsToMeters(gameRef_.getWindow().getSize());
-	b2Vec2 pos = body_->GetPosition();
-	b2Vec2 veloc = body_->GetLinearVelocity();
-
-	//Distance to the edge when we bounce
-	float buffer = pixelsToMeters(getTextureRect().width) / 2.0f;
-
-	if ((pos.x > window.x && veloc.x > buffer) || (pos.x < buffer && veloc.x < 0))
-	{
-		body_->SetLinearVelocity(b2Vec2(-veloc.x, veloc.y));
-	}
-	if ((pos.y > window.y && veloc.y > buffer) || (pos.y < buffer && veloc.y < 0))
-	{
-		body_->SetLinearVelocity(b2Vec2(veloc.x, -veloc.y));
-	}
+	//TODO add timing logic for animations
 }
 
 

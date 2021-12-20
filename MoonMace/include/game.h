@@ -12,6 +12,7 @@
 #include "MyContactListener.h"
 #include "GameManager.h"
 #include "Texture_manager.h"
+#include "AudioManager.h"
 
 class Game {
 public:
@@ -33,6 +34,7 @@ private:
 	//Managers
 	GameManager gameManager_;
 	Texture_manager textureManager_;
+	AudioManager audioManager_;
 
 	// The window ---------------------------------------------
 	sf::RenderWindow m_window;
