@@ -159,6 +159,7 @@ void GameManager::GameOver()
 			break;
 	}
 
+	gameRef_.GameOverChanges();
 	gameRef_.AnnouncerSay(relevantMessage);
 }
 
@@ -169,7 +170,8 @@ int GameManager::GetScore() const
 
 void GameManager::IncreaseScore(int value)
 {
-	score_ += value;
+	if (!gameOver_)
+		score_ += value;
 }
 
 void GameManager::AddDeadId(int id)

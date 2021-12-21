@@ -47,8 +47,10 @@ void Game::init()
 	m_score_text.setString("0");
 	m_score_text.setFont(m_font);
 	m_score_text.setFillColor(sf::Color::White);
-	m_score_text.setCharacterSize(50);
-	m_score_text.setPosition(50, 50);
+	m_score_text.setCharacterSize(75);
+	m_score_text.setOrigin(m_score_text.getGlobalBounds().width / 2.0f,
+		m_score_text.getGlobalBounds().height / 2.0f);
+	m_score_text.setPosition(m_window.getSize().x / 20.0f, m_window.getSize().y / 20.0f);
 	 
 	//GameOver
 	m_game_over_text.setString("GAME OVER");
@@ -56,7 +58,9 @@ void Game::init()
 	m_game_over_text.setFillColor(sf::Color::White);
 	m_game_over_text.setCharacterSize(200);
 	m_game_over_text.setStyle(sf::Text::Bold);
-	m_game_over_text.setPosition(m_window.getSize().x / 10.0f, m_window.getSize().y / 2.0f);
+	m_game_over_text.setOrigin(m_game_over_text.getGlobalBounds().width / 2.0f,
+		m_game_over_text.getGlobalBounds().height / 2.0f);
+	m_game_over_text.setPosition(m_window.getSize().x / 2.0f, m_window.getSize().y / 2.0f);
 #pragma endregion
 
 #pragma region PlayerCreation
@@ -284,12 +288,14 @@ bool Game::loop()
 		m_window.draw(*player);
 
 #pragma region UI
-		m_score_text.setString(std::to_string(GameManager::GetInstance()->GetScore()));
-		m_window.draw(m_score_text);
-
 		if (GameManager::GetInstance()->IsGameOver())
 		{
 			m_window.draw(m_game_over_text);
+		}
+		else
+		{
+			m_score_text.setString(std::to_string(GameManager::GetInstance()->GetScore()));
+			m_window.draw(m_score_text);
 		}
 #pragma endregion
 
@@ -319,4 +325,9 @@ void Game::AnnouncerSay(AudioPath path)
 {
 	announcer.setBuffer(audioManager_.RequestBuffer(path));
 	announcer.play();
+}
+
+void Game::GameOverChanges()
+{
+	m_game_over_text.setString(m_game_over_text.getString() + "\nScore : " + m_score_text.getString());
 }

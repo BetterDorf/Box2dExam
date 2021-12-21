@@ -34,6 +34,7 @@ public:
 	sf::RenderWindow& getWindow() { return  m_window; }
 
 	void AnnouncerSay(AudioPath path);
+	void GameOverChanges();
 
 
 private:
