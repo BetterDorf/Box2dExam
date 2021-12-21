@@ -25,6 +25,7 @@ public:
 	void Reset();
 	
 	int GetScore() const;
+	void IncreaseScore(int value);
 
 	void AddDeadId(int id);
 
@@ -37,6 +38,7 @@ private:
 	//Decide and call the other spawn functions then reset the timer
 	void GenericSpawn(); 
 	void SpawnEnemyShip();
+	void SpawnRocket();
 
 	b2Vec2 GenerateSpawnPosition();
 
@@ -53,7 +55,5 @@ private:
 
 	//The timer is set to time between spawn multiplied by the spawnee's mod
 	float timeBetweenSpawn_ = BASE_SPAWN_TIME;
-	float shipMod_ = 0.5f;
 	float timer_ = START_TIMER;
-	float spawnIncrease_ = 1.01f;
 };

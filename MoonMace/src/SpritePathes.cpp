@@ -16,5 +16,7 @@ std::string ConvertPathToString(SpritePath path)
 		return base + "Moon.png";
 	case SpritePath::Explosion:
 		return base + "Explosion-Sheet.png";
+	case SpritePath::Rocket :
+		return base + "Rocket.png";
 	}
 }

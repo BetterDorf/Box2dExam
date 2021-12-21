@@ -6,9 +6,9 @@
 #include "AudioManager.h"
 #include "AudiovisualEffect.h"
 
-DamagingEntity::DamagingEntity(Game& gameRef, int id) : Entity(CollisionTag::DAMAGING, gameRef), id_(id)
-{
-}
+DamagingEntity::DamagingEntity(Game& gameRef, int id, float strengthMod, int value) : Entity(CollisionTag::DAMAGING, gameRef),
+id_(id), strengthMod_(strengthMod), value_(value)
+{}
 
 int DamagingEntity::GetId()
 {
@@ -54,12 +54,13 @@ void DamagingEntity::Update()
     b2Vec2 destination = gameRef_.GetPlayerPos() - body_->GetPosition();
     destination.Normalize();
 
-    destination *= ENEMY_ACCEL;
+    destination *= ENEMY_ACCEL * strengthMod_;
     body_->ApplyForceToCenter(destination, true);
 }
 
 void DamagingEntity::Die()
 {
+    GameManager::GetInstance()->IncreaseScore(value_);
     auto ptr =  std::make_unique<AudiovisualEffect>(SpritePath::Explosion, body_->GetPosition(),
         AudioPath::Explosion, gameRef_.getWindow());
     gameRef_.GetEffects()->emplace_back(std::move(ptr));

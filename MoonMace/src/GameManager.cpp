@@ -58,25 +58,58 @@ void GameManager::GenericSpawn()
 	//Randomly decide a "budget" for the wave
 	int budget = rand() % MAX_SPAWN_BUDGET + 1;
 
-	for (int i = 0; i < budget ; i++)
-		SpawnEnemyShip();
+	do
+	{
+		int num = rand() % (ROCKET_ODDS + SHIP_ODDS); //Choose a random number between 0 and the total of all weights
+
+		num -= SHIP_ODDS;
+		if (num < 0 && budget > SHIP_COST)
+		{
+			SpawnEnemyShip();
+			budget -= SHIP_COST;
+			continue;
+		}
+
+		num -= ROCKET_ODDS;
+		if (num < 0 && budget > ROCKET_COST)
+		{
+			SpawnRocket();
+			budget -= ROCKET_COST;
+			continue;
+		}
+		break;
+		
+	} while (budget > 0);
 }
 
 void GameManager::SpawnEnemyShip()
 {
 	b2Vec2 pos = GenerateSpawnPosition();
-
-	score_++;
 	
-	std::unique_ptr<DamagingEntity> uPtr = std::make_unique<DamagingEntity>(gameRef_, curId_++);
+	std::unique_ptr<DamagingEntity> uPtr = std::make_unique<DamagingEntity>(gameRef_, curId_++, 1.0f, 1);
 	uPtr->Init(pos.x, pos.y, SpritePath::StarEnemy);
 
 	gameRef_.GetEntities()->emplace_back(std::move(uPtr));
 
 	//Handle timer modifs
-	timer_ += timeBetweenSpawn_ * shipMod_;
-	timeBetweenSpawn_ /= spawnIncrease_;
+	timer_ += timeBetweenSpawn_ * SHIP_MOD;
+	timeBetweenSpawn_ /= TIMER_SPEED_UP;
 }
+
+void GameManager::SpawnRocket()
+{
+	b2Vec2 pos = GenerateSpawnPosition();
+
+	std::unique_ptr<DamagingEntity> uPtr = std::make_unique<DamagingEntity>(gameRef_, curId_++, ROCKET_STRENGTH, ROCKET_VALUE);
+	uPtr->Init(pos.x, pos.y, SpritePath::Rocket);
+
+	gameRef_.GetEntities()->emplace_back(std::move(uPtr));
+
+	//Handle timer modifs
+	timer_ += timeBetweenSpawn_ * ROCKET_MOD;
+	timeBetweenSpawn_ /= TIMER_SPEED_UP;
+}
+
 
 
 bool GameManager::IsGameOver() const
@@ -110,10 +143,13 @@ int GameManager::GetScore() const
 	return score_;
 }
 
+void GameManager::IncreaseScore(int value)
+{
+	score_ += value;
+}
+
 void GameManager::AddDeadId(int id)
 {
-	score_++;
-
 	deadIds_.emplace_back(id);
 }
 

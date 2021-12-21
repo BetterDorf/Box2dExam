@@ -13,10 +13,24 @@ constexpr double ROT_SPEED = 0.006;
 
 //Prevent enemies from spawning too close (squared)
 constexpr float NOSPAWN_RADIUS = 3.0f;
-constexpr int MAX_SPAWN_BUDGET = 7;
+constexpr int MAX_SPAWN_BUDGET = 8;
+
+constexpr int ROCKET_ODDS = 1;
+constexpr int SHIP_ODDS = 5;
+
+constexpr float SHIP_COST = 0.8f;
+constexpr float ROCKET_COST = 2.5f;
+
 constexpr float START_TIMER = 1.0f;
 constexpr float BASE_SPAWN_TIME = 5.0f;
+constexpr float TIMER_SPEED_UP = 1.015f;
+
+constexpr float SHIP_MOD = 0.5f;
+constexpr float ROCKET_MOD = 1.5f;
 
 //Force when enemy is made
 constexpr float ENEMY_IMPULSE = 5.0f;
 constexpr float ENEMY_ACCEL = 0.05f;
+
+constexpr float ROCKET_STRENGTH = 13.0f;
+constexpr int ROCKET_VALUE = 5;
