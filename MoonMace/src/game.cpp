@@ -14,8 +14,6 @@
 #include "Moon.h"
 #include "Rope.h"
 
-bool Game::gameStarted = false;
-
 Game::Game() : m_gravity(0.0f, 0.0f), m_world(m_gravity), gameManager_(*this)
 {
 	m_world.SetContactListener(&contact_listener_);
@@ -28,7 +26,7 @@ void Game::init()
 	{
 		gameStarted = true;
 
-		m_window.create(sf::VideoMode::getFullscreenModes()[0], "Moon Mace", sf::Style::Fullscreen);
+		m_window.create(sf::VideoMode::getFullscreenModes()[0], "Moon Mace", sf::Style::Default);
 		m_window.setMouseCursorVisible(false);
 		m_window.setVerticalSyncEnabled(true);
 		m_window.setFramerateLimit(60.0f);
@@ -109,7 +107,22 @@ void Game::init()
 #pragma endregion
 }
 
-void Game::loop()
+
+void Game::defineMenu()
+{
+	//Define all that needs to be written
+	sf::Text text;
+	text.setString("MoonMace");
+	text.setFont(m_font);
+	text.setFillColor(sf::Color::White);
+	text.setCharacterSize(200);
+	text.setOrigin(text.getGlobalBounds().width / 2.0f, text.getGlobalBounds().height / 2.0f);
+	text.setPosition(m_window.getSize().x / 2.0f, 300);
+	texts_.emplace_back(std::make_unique<sf::Text>(text));
+}
+
+
+bool Game::loop()
 {
 	sf::Clock clock;
 	sf::Time collectedElapsed;
@@ -126,7 +139,28 @@ void Game::loop()
 			{
 				//Clear the entities
 				CloseGame();
-				return;
+				return false;
+			}
+
+			//Handle space press here to have only the key down event
+			if (event.type == sf::Event::KeyPressed)
+			{
+				if (event.key.code == sf::Keyboard::Key::Space)
+				{
+					if(gameManager_.IsGameOver())
+					{
+						//Clear up last game
+						entities.clear();
+						effects.clear();
+						player.reset();
+
+						//Startup new one
+						this->init();
+						return true;
+					}
+
+					gamePaused = !gamePaused;
+				}
 			}
 		}
 
@@ -136,10 +170,26 @@ void Game::loop()
 		{
 			//Clear the entities
 			CloseGame();
-			return;
+			return false;
 		}
 
-		//Run the movement logic if the game is ongoing
+		//Show the menu
+		if(gamePaused)
+		{
+			m_window.clear();
+
+			for (auto& text : texts_)
+			{
+				m_window.draw(*text.get());
+			}
+
+			m_window.display();
+
+			continue;
+		}
+
+
+		//Run the movement logic only if the game isn't over
 		if (!GameManager::GetInstance()->IsGameOver())
 		{
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W))
@@ -153,17 +203,6 @@ void Game::loop()
 			else
 				player->DeccelRotate();
 		}
-		else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space))
-		{
-			//Clear up last game
-			entities.clear();
-			player.reset();
-
-			//Startup new one
-			this->init();
-			this->loop();
-			return;
-		}
 
 #pragma region Physical process
 			// Updating the world with a delay
@@ -172,12 +211,9 @@ void Game::loop()
 			static constexpr int32 positionIterations = 2;
 			m_world.Step(timeStep, velocityIterations, positionIterations);
 
-			//update all
-
 			// Tick every 1.0sec
 			sf::Time elapsed = clock.restart();
 			collectedElapsed += elapsed;
-
 #pragma endregion
 
 #pragma region Update GameManager
@@ -231,6 +267,7 @@ void Game::loop()
 
 void Game::CloseGame()
 {
+	effects.clear();
 	entities.clear();
 	player.release();
 

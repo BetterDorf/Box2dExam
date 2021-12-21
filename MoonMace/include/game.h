@@ -21,7 +21,9 @@ public:
 	Game();
 
 	void init();
-	void loop();
+	void defineMenu();
+	//Return true each time the player wants to play again
+	bool loop();
 
 	std::vector<std::unique_ptr<Entity>>* GetEntities() { return &entities; }
 	std::vector<std::unique_ptr<AudiovisualEffect>>* GetEffects() { return &effects; }
@@ -33,10 +35,11 @@ public:
 
 	void AnnouncerSay(AudioPath path);
 
-protected:
-	static bool gameStarted;
 
 private:
+	bool gameStarted;
+	bool gamePaused = true;
+
 	//Managers
 	GameManager gameManager_;
 	Texture_manager textureManager_;
@@ -49,7 +52,7 @@ private:
 	sf::Font m_font;
 	sf::Text m_score_text;
 	sf::Text m_game_over_text;
-	std::vector<sf::Text> texts_;
+	std::vector<std::unique_ptr<sf::Text>> texts_;
 
 	//Entities
 	std::vector<std::unique_ptr<Entity>> entities;

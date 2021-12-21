@@ -6,5 +6,8 @@ int main()
 
 	game.init();
 
-	game.loop();
+	game.defineMenu();
+
+    while (game.loop())
+    {}
 }
