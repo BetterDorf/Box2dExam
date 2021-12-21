@@ -5,6 +5,7 @@ enum class SpritePath
 {
 	Player,
 	StarEnemy,
+	StarEnemy2,
 	Chain,
 	Moon,
 	Explosion,

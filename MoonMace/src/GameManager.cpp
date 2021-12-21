@@ -60,7 +60,7 @@ void GameManager::GenericSpawn()
 
 	do
 	{
-		int num = rand() % (ROCKET_ODDS + SHIP_ODDS); //Choose a random number between 0 and the total of all weights
+		int num = rand() % (ROCKET_ODDS + SHIP_ODDS + BIG_STAR_ODDS); //Choose a random number between 0 and the total of all weights
 
 		num -= SHIP_ODDS;
 		if (num < 0 && budget > SHIP_COST)
@@ -77,6 +77,15 @@ void GameManager::GenericSpawn()
 			budget -= ROCKET_COST;
 			continue;
 		}
+
+		num -= BIG_STAR_ODDS;
+		if (num < 0 && budget > BIG_STAR_COST)
+		{
+			SpawnBigStar();
+			budget -= BIG_STAR_COST;
+			continue;
+		}
+
 		break;
 		
 	} while (budget > 0);
@@ -110,6 +119,21 @@ void GameManager::SpawnRocket()
 	timeBetweenSpawn_ /= TIMER_SPEED_UP;
 }
 
+
+void GameManager::SpawnBigStar()
+{
+	b2Vec2 pos = GenerateSpawnPosition();
+
+	std::unique_ptr<DamagingEntity> uPtr = std::make_unique<DamagingEntity>(gameRef_, curId_++,
+		BIG_STAR_STRENGTH, BIG_STAR_VALUE);
+	uPtr->Init(pos.x, pos.y, SpritePath::StarEnemy2);
+
+	gameRef_.GetEntities()->emplace_back(std::move(uPtr));
+
+	//Handle timer modifs
+	timer_ += timeBetweenSpawn_ * BIG_STAR_MOD;
+	timeBetweenSpawn_ /= TIMER_SPEED_UP;
+}
 
 
 bool GameManager::IsGameOver() const

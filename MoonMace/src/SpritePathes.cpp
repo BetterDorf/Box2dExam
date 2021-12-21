@@ -10,6 +10,8 @@ std::string ConvertPathToString(SpritePath path)
 		return base + "Ship.png";
 	case SpritePath::StarEnemy:
 		return base + "StarShip.png";
+	case SpritePath::StarEnemy2:
+		return base + "StarShip2.png";
 	case SpritePath::Chain:
 		return base + "Chain.png";
 	case SpritePath::Moon:
