@@ -4,6 +4,7 @@
 #include "Game.h"
 #include "SFML_Utilities.h"
 #include "AudioManager.h"
+#include "AudiovisualEffect.h"
 
 DamagingEntity::DamagingEntity(Game& gameRef, int id) : Entity(CollisionTag::DAMAGING, gameRef), id_(id)
 {
@@ -55,4 +56,11 @@ void DamagingEntity::Update()
 
     destination *= ENEMY_ACCEL;
     body_->ApplyForceToCenter(destination, true);
+}
+
+void DamagingEntity::Die()
+{
+    auto ptr =  std::make_unique<AudiovisualEffect>(SpritePath::Explosion, body_->GetPosition(),
+        AudioPath::Explosion, gameRef_.getWindow());
+    gameRef_.GetEffects()->emplace_back(std::move(ptr));
 }

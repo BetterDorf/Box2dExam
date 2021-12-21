@@ -29,6 +29,4 @@ protected:
 	UserData userData_;
 	b2Body* body_ = nullptr;
 	virtual void DefineFixture(const sf::Vector2u textureSize);
-
-	virtual void Die();
 };

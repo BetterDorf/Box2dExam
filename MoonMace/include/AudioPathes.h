@@ -4,7 +4,8 @@
 
 enum class AudioPath
 {
-	StarSpawn
+	StarSpawn,
+	Explosion
 };
 
 std::string ConvertPathToString(AudioPath path);

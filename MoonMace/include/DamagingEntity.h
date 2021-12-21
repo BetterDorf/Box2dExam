@@ -15,6 +15,8 @@ public:
 	void DefineFixture(const sf::Vector2u textureSize) override;
 	void Update() override;
 
+	void Die();
+
 private:
 	int id_;
 

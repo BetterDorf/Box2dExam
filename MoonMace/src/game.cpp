@@ -8,6 +8,7 @@
 #include <string>
 
 #include "GameplayConstants.h"
+#include "ProgramConstants.h"
 #include "SFML_utilities.h"
 
 #include "Moon.h"
@@ -27,7 +28,7 @@ void Game::init()
 	{
 		gameStarted = true;
 
-		m_window.create(sf::VideoMode::getFullscreenModes()[0], "Moon Mace", sf::Style::Fullscreen);
+		m_window.create(sf::VideoMode::getFullscreenModes()[0], "Moon Mace", sf::Style::Default);
 		m_window.setMouseCursorVisible(false);
 		m_window.setVerticalSyncEnabled(true);
 		m_window.setFramerateLimit(60.0f);
@@ -188,7 +189,23 @@ void Game::loop()
 		// Clear all background
 		m_window.clear();
 
-		//Draw all elements
+		//Animate and cleanup visual effects every 5 frames
+		if (IncrementFrameCounter() == 0)
+		{
+			if (!effects.empty())
+			{
+				auto it = std::remove_if(effects.begin(), effects.end(),
+					[&](const std::unique_ptr<AudiovisualEffect>& entity) {return !entity->Animate(); });
+				effects.erase(it, effects.end());
+			}
+		}
+		//Draw the effects
+		for (auto& ent : effects)
+		{
+			m_window.draw(*ent);
+		}
+
+		//Draw normal elements
 		for (auto& ent : entities)
 		{
 			(*ent).Update();
@@ -219,4 +236,11 @@ void Game::CloseGame()
 	player.release();
 
 	m_window.close();
+}
+
+int Game::IncrementFrameCounter()
+{
+	frameCounter++;
+	frameCounter %= FRAMES_PER_ANIMATION_STEP;
+	return frameCounter;
 }

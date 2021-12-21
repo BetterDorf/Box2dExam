@@ -12,7 +12,6 @@ Entity::Entity(CollisionTag tag, Game& gameRef) : gameRef_(gameRef)
 
 Entity::~Entity()
 {
-    Die();
 	body_->GetWorld()->DestroyBody(body_);
 }
 
@@ -76,8 +75,4 @@ void Entity::Update()
     {
         body_->SetLinearVelocity(b2Vec2(veloc.x, -veloc.y));
     }
-}
-
-void Entity::Die()
-{
 }

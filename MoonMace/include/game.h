@@ -8,7 +8,9 @@
 #include <box2d/b2_world.h>
 
 #include "Entity.h"
+#include "AudiovisualEffect.h"
 #include "Player.h"
+
 #include "MyContactListener.h"
 #include "GameManager.h"
 #include "Texture_manager.h"
@@ -16,13 +18,15 @@
 
 class Game {
 public:
-	//No need to check or set the instance, it is guaranteed to be set in the constructor beforehand
-	std::vector<std::unique_ptr<Entity>>* GetEntities() { return &entities; }
-	b2Vec2 GetPlayerPos() { return player->GetBody()->GetPosition(); }
-
 	Game();
+
 	void init();
 	void loop();
+
+	std::vector<std::unique_ptr<Entity>>* GetEntities() { return &entities; }
+	std::vector<std::unique_ptr<AudiovisualEffect>>* GetEffects() { return &effects; }
+
+	b2Vec2 GetPlayerPos() { return player->GetBody()->GetPosition(); }
 
 	b2World& getWorld() { return m_world; }
 	sf::RenderWindow& getWindow() { return  m_window; }
@@ -46,7 +50,12 @@ private:
 
 	//Entities
 	std::vector<std::unique_ptr<Entity>> entities;
+	std::vector<std::unique_ptr<AudiovisualEffect>> effects;
 	std::unique_ptr<Player> player;
+
+	//Animation
+	int IncrementFrameCounter();
+	int frameCounter = 0;
 
 	// The physical world -------------------------------------
 	b2Vec2 m_gravity;

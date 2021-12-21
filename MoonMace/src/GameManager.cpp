@@ -32,8 +32,11 @@ void GameManager::Update(sf::Time time)
 				for (const auto& id : deadIds_)
 				{
 					if(auto damaging = static_cast<DamagingEntity*>(entity.get()))
-					if (damaging->GetId() == id) 
+					if (damaging->GetId() == id)
+					{
+						damaging->Die();
 						return true;
+					}
 				}
 				return false;
 			});
