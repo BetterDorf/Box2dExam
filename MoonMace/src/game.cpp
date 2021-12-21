@@ -43,7 +43,6 @@ void Game::init()
 	m_font.loadFromFile("data/Fonts/upheavtt.ttf");
 
 	//Score
-	sf::Text text;
 	m_score_text.setString("0");
 	m_score_text.setFont(m_font);
 	m_score_text.setFillColor(sf::Color::White);
@@ -61,6 +60,15 @@ void Game::init()
 	m_game_over_text.setOrigin(m_game_over_text.getGlobalBounds().width / 2.0f,
 		m_game_over_text.getGlobalBounds().height / 2.0f);
 	m_game_over_text.setPosition(m_window.getSize().x / 2.0f, m_window.getSize().y / 2.0f);
+
+	//Wave
+	m_wave_text.setString("Wave : 0");
+	m_wave_text.setFont(m_font);
+	m_wave_text.setFillColor(sf::Color::Yellow);
+	m_wave_text.setCharacterSize(30);
+	m_wave_text.setOrigin(m_wave_text.getGlobalBounds().width,
+		m_wave_text.getGlobalBounds().height / 2.0f);
+	m_wave_text.setPosition(m_window.getSize().x - m_window.getSize().x / 20.0f, m_window.getSize().y / 20.0f);
 #pragma endregion
 
 #pragma region PlayerCreation
@@ -288,13 +296,15 @@ bool Game::loop()
 		m_window.draw(*player);
 
 #pragma region UI
+		m_wave_text.setString("Wave : " + std::to_string(gameManager_.GetWave()));
+		m_window.draw(m_wave_text);
 		if (GameManager::GetInstance()->IsGameOver())
 		{
 			m_window.draw(m_game_over_text);
 		}
 		else
 		{
-			m_score_text.setString(std::to_string(GameManager::GetInstance()->GetScore()));
+			m_score_text.setString(std::to_string(gameManager_.GetScore()));
 			m_window.draw(m_score_text);
 		}
 #pragma endregion

@@ -53,6 +53,7 @@ private:
 	sf::Font m_font;
 	sf::Text m_score_text;
 	sf::Text m_game_over_text;
+	sf::Text m_wave_text;
 	std::vector<std::unique_ptr<sf::Text>> texts_;
 
 	//Entities

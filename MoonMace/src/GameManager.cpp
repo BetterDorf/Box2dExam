@@ -55,8 +55,21 @@ void GameManager::GenericSpawn()
 	if (gameOver_)
 		return;
 
+	//Increase the wave count and reset the acceleration of waves
+	wave_++;
+	if (wave_ % WAVE_TO_BUDGET_INCREASE == 0)
+	{
+		timeBetweenSpawn_ = BASE_SPAWN_TIME;
+
+		//Give respite time
+		timer_ = BASE_SPAWN_TIME * RESPITE_MULT;
+	}
+
 	//Randomly decide a "budget" for the wave
-	int budget = rand() % MAX_SPAWN_BUDGET + 1;
+	//1 additional max budget per x waves
+	//min budget is half of max budget
+	int minBudget = (MAX_SPAWN_BUDGET + wave_ / WAVE_TO_BUDGET_INCREASE) / 2;
+	int budget = rand() % (MAX_SPAWN_BUDGET + wave_ / WAVE_TO_BUDGET_INCREASE - minBudget + 1) + minBudget;
 
 	do
 	{
@@ -198,6 +211,12 @@ int GameManager::GetScore() const
 	return score_;
 }
 
+int GameManager::GetWave() const
+{
+	return wave_;
+}
+
+
 void GameManager::IncreaseScore(int value)
 {
 	if (!gameOver_)
@@ -228,6 +247,7 @@ void GameManager::Reset()
 {
 	gameOver_ = false;
 	score_ = 0;
+	wave_ = 0;
 	timeBetweenSpawn_= BASE_SPAWN_TIME;
 	timer_ = START_TIMER;
 }

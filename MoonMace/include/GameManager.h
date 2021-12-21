@@ -25,6 +25,8 @@ public:
 	void Reset();
 	
 	int GetScore() const;
+	int GetWave() const;
+
 	void IncreaseScore(int value);
 
 	void AddDeadId(int id);
@@ -48,6 +50,7 @@ private:
 
 	//1 is gained per thing created and 1 more per destroyed
 	int score_ = 0;
+	int wave_ = 0;
 
 	//The id things get created with, goes up after each creation
 	int curId_ = 1;

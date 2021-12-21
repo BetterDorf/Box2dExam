@@ -13,22 +13,29 @@ constexpr double ROT_SPEED = 0.006;
 
 //Prevent enemies from spawning too close (squared)
 constexpr float NOSPAWN_RADIUS = 3.0f;
-constexpr int MAX_SPAWN_BUDGET = 8;
+constexpr int MAX_SPAWN_BUDGET = 7;
+constexpr int WAVE_TO_BUDGET_INCREASE = 5;
+
+//Amount of times we have base spawn time to rest between chunks of waves
+constexpr int RESPITE_MULT = 3;
+
+//Timers
+constexpr float START_TIMER = 1.0f;
+constexpr float BASE_SPAWN_TIME = 3.5f;
+constexpr float TIMER_SPEED_UP = 1.1f;
 
 constexpr int ROCKET_ODDS = 2;
 constexpr int SHIP_ODDS = 13;
 constexpr int BIG_STAR_ODDS = 4;
-constexpr int CAPSULE_ODDS = 1;
+constexpr int CAPSULE_ODDS = 3;
 
+//Budget cost
 constexpr int SHIP_COST = 1;
 constexpr int ROCKET_COST = 3;
 constexpr int BIG_STAR_COST = 2;
-constexpr int CAPSULE_COST = 0;
+constexpr int CAPSULE_COST = 1;
 
-constexpr float START_TIMER = 1.0f;
-constexpr float BASE_SPAWN_TIME = 5.0f;
-constexpr float TIMER_SPEED_UP = 1.015f;
-
+//Modify how much time is added until next wave
 constexpr float SHIP_MOD = 0.5f;
 constexpr float ROCKET_MOD = 1.5f;
 constexpr float BIG_STAR_MOD = 0.9f;
