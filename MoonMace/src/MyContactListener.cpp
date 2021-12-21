@@ -1,6 +1,9 @@
 #include "MyContactListener.h"
+
 #include "DamagingEntity.h"
+
 #include "GameManager.h"
+#include "AudioManager.h"
 
 #include <iostream>
 
@@ -35,6 +38,11 @@ void MyContactListener::BeginContact(b2Contact* contact)
             {
                 if (auto damaging = static_cast<DamagingEntity*>(dataA))
 					GameManager::GetInstance()->AddDeadId(damaging->GetId());
+            }
+            else
+            {
+                collisionSound.setBuffer(AudioManager::GetInstance()->RequestBuffer(AudioPath::Bounce));
+                collisionSound.play();
             }
             break;
 	    case CollisionTag::IGNORE: break;

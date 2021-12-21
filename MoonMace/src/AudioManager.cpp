@@ -8,7 +8,7 @@ AudioManager::AudioManager()
 {
 	instance_ = this;
 
-	music_.setVolume(40);
+	music_.setVolume(10);
 }
 
 sf::SoundBuffer& AudioManager::RequestBuffer(AudioPath path)

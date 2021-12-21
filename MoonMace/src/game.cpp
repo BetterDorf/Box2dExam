@@ -244,3 +244,9 @@ int Game::IncrementFrameCounter()
 	frameCounter %= FRAMES_PER_ANIMATION_STEP;
 	return frameCounter;
 }
+
+void Game::AnnouncerSay(AudioPath path)
+{
+	announcer.setBuffer(audioManager_.RequestBuffer(path));
+	announcer.play();
+}

@@ -31,6 +31,8 @@ public:
 	b2World& getWorld() { return m_world; }
 	sf::RenderWindow& getWindow() { return  m_window; }
 
+	void AnnouncerSay(AudioPath path);
+
 protected:
 	static bool gameStarted;
 
@@ -56,6 +58,9 @@ private:
 	//Animation
 	int IncrementFrameCounter();
 	int frameCounter = 0;
+
+	//Audio
+	sf::Sound announcer;
 
 	// The physical world -------------------------------------
 	b2Vec2 m_gravity;

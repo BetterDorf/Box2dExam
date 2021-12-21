@@ -87,6 +87,22 @@ bool GameManager::IsGameOver() const
 void GameManager::GameOver()
 {
 	gameOver_ = true;
+
+	//Play an appropriate gameOver sound
+	AudioPath relevantMessage = AudioPath::GameOver1;
+	while (rand() % 2 != 0)
+	{
+		if (relevantMessage == AudioPath::GameOver1)
+			relevantMessage = AudioPath::GameOver2;
+		else if (relevantMessage == AudioPath::GameOver2)
+			relevantMessage = AudioPath::GameOver3;
+		else if (relevantMessage == AudioPath::GameOver3)
+			relevantMessage = AudioPath::GameOver4;
+		else
+			break;
+	}
+
+	gameRef_.AnnouncerSay(relevantMessage);
 }
 
 int GameManager::GetScore() const
