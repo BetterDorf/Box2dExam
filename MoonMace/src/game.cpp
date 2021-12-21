@@ -28,7 +28,7 @@ void Game::init()
 	{
 		gameStarted = true;
 
-		m_window.create(sf::VideoMode::getFullscreenModes()[0], "Moon Mace", sf::Style::Default);
+		m_window.create(sf::VideoMode::getFullscreenModes()[0], "Moon Mace", sf::Style::Fullscreen);
 		m_window.setMouseCursorVisible(false);
 		m_window.setVerticalSyncEnabled(true);
 		m_window.setFramerateLimit(60.0f);
@@ -45,6 +45,7 @@ void Game::init()
 	m_font.loadFromFile("data/Fonts/upheavtt.ttf");
 
 	//Score
+	sf::Text text;
 	m_score_text.setString("0");
 	m_score_text.setFont(m_font);
 	m_score_text.setFillColor(sf::Color::White);
@@ -131,6 +132,13 @@ void Game::loop()
 
 
 #pragma endregion
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape))
+		{
+			//Clear the entities
+			CloseGame();
+			return;
+		}
+
 		//Run the movement logic if the game is ongoing
 		if (!GameManager::GetInstance()->IsGameOver())
 		{
@@ -145,25 +153,16 @@ void Game::loop()
 			else
 				player->DeccelRotate();
 		}
-		else
+		else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space))
 		{
-			if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape))
-			{
-				//Clear the entities
-				CloseGame();
-				return;
-			}
-			if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space))
-			{
-				//Clear up last game
-				entities.clear();
-				player.reset();
+			//Clear up last game
+			entities.clear();
+			player.reset();
 
-				//Startup new one
-				this->init();
-				this->loop();
-				return;
-			}
+			//Startup new one
+			this->init();
+			this->loop();
+			return;
 		}
 
 #pragma region Physical process
