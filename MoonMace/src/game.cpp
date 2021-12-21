@@ -26,7 +26,7 @@ void Game::init()
 	{
 		gameStarted = true;
 
-		m_window.create(sf::VideoMode::getFullscreenModes()[0], "Moon Mace", sf::Style::Default);
+		m_window.create(sf::VideoMode::getFullscreenModes()[0], "Moon Mace", sf::Style::Fullscreen);
 		m_window.setMouseCursorVisible(false);
 		m_window.setVerticalSyncEnabled(true);
 		m_window.setFramerateLimit(60.0f);
@@ -117,7 +117,41 @@ void Game::defineMenu()
 	text.setFillColor(sf::Color::White);
 	text.setCharacterSize(200);
 	text.setOrigin(text.getGlobalBounds().width / 2.0f, text.getGlobalBounds().height / 2.0f);
+	text.setPosition(m_window.getSize().x / 2.0f, 100);
+	texts_.emplace_back(std::make_unique<sf::Text>(text));
+
+	text.setString("Controls:");
+	text.setCharacterSize(100);
+	text.setOrigin(text.getGlobalBounds().width / 2.0f, text.getGlobalBounds().height / 2.0f);
 	text.setPosition(m_window.getSize().x / 2.0f, 300);
+	texts_.emplace_back(std::make_unique<sf::Text>(text));
+
+	text.setString("Space: Pause/Play");
+	text.setCharacterSize(50);
+	text.setOrigin(text.getGlobalBounds().width / 2.0f, text.getGlobalBounds().height / 2.0f);
+	text.setPosition(m_window.getSize().x / 2.0f, 400);
+	texts_.emplace_back(std::make_unique<sf::Text>(text));
+
+	text.setString("Esc: Exit");
+	text.setOrigin(text.getGlobalBounds().width / 2.0f, text.getGlobalBounds().height / 2.0f);
+	text.setPosition(m_window.getSize().x / 2.0f, 450);
+	texts_.emplace_back(std::make_unique<sf::Text>(text));
+
+	text.setString("W: Go forward");
+	text.setOrigin(text.getGlobalBounds().width / 2.0f, text.getGlobalBounds().height / 2.0f);
+	text.setPosition(m_window.getSize().x / 2.0f, 500);
+	texts_.emplace_back(std::make_unique<sf::Text>(text));
+
+	text.setString("A/D: Turn");
+	text.setOrigin(text.getGlobalBounds().width / 2.0f, text.getGlobalBounds().height / 2.0f);
+	text.setPosition(m_window.getSize().x / 2.0f, 550);
+	texts_.emplace_back(std::make_unique<sf::Text>(text));
+
+	text.setString("Music : https://arcofdream.bandcamp.com/track/shelf-space \n"
+		"Code : Shamelessly copied from all over internet\n"
+		"Things that barely work : me");
+	text.setOrigin(text.getGlobalBounds().width / 2.0f, text.getGlobalBounds().height / 2.0f);
+	text.setPosition(m_window.getSize().x / 2.0f, m_window.getSize().y - text.getGlobalBounds().height);
 	texts_.emplace_back(std::make_unique<sf::Text>(text));
 }
 
