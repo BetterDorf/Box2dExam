@@ -216,6 +216,12 @@ int GameManager::GetWave() const
 	return wave_;
 }
 
+float GameManager::GetTimer() const
+{
+	return timer_;
+}
+
+
 
 void GameManager::IncreaseScore(int value)
 {

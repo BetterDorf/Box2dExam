@@ -1,10 +1,12 @@
 #include "Game.h"
 
+#include <iomanip>
 #include <random>
 #include <time.h>
 #include <SFML/Window/Keyboard.hpp>
 #include <SFML/Window/Event.hpp>
 
+#include <sstream>
 #include <string>
 
 #include "GameplayConstants.h"
@@ -18,6 +20,47 @@ Game::Game() : m_gravity(0.0f, 0.0f), m_world(m_gravity), gameManager_(*this)
 {
 	m_world.SetContactListener(&contact_listener_);
 	srand(time(NULL));
+}
+
+void Game::SetupTexts()
+{
+	//font
+	m_font.loadFromFile("data/Fonts/upheavtt.ttf");
+
+	//Score
+	m_score_text.setString("0");
+	m_score_text.setFont(m_font);
+	m_score_text.setFillColor(sf::Color::White);
+	m_score_text.setCharacterSize(75);
+	m_score_text.setOrigin(m_score_text.getGlobalBounds().width / 2.0f,
+		m_score_text.getGlobalBounds().height / 2.0f);
+	m_score_text.setPosition(m_window.getSize().x / 20.0f, m_window.getSize().y / 20.0f);
+
+	//GameOver
+	m_game_over_text.setString("GAME OVER");
+	m_game_over_text.setFont(m_font);
+	m_game_over_text.setFillColor(sf::Color::White);
+	m_game_over_text.setCharacterSize(200);
+	m_game_over_text.setStyle(sf::Text::Bold);
+	m_game_over_text.setOrigin(m_game_over_text.getGlobalBounds().width / 2.0f,
+		m_game_over_text.getGlobalBounds().height / 2.0f);
+	m_game_over_text.setPosition(m_window.getSize().x / 2.0f, m_window.getSize().y / 2.0f);
+
+	//Wave
+	m_wave_text.setString("Wave : 0");
+	m_wave_text.setFont(m_font);
+	m_wave_text.setFillColor(sf::Color::Yellow);
+	m_wave_text.setCharacterSize(30);
+	m_wave_text.setOrigin(m_wave_text.getGlobalBounds().width,
+		m_wave_text.getGlobalBounds().height / 2.0f);
+	m_wave_text.setPosition(m_window.getSize().x - m_window.getSize().x / 20.0f, m_window.getSize().y / 20.0f);
+
+	m_wave_time_text.setString("0.0");
+	m_wave_time_text.setFont(m_font);
+	m_wave_time_text.setFillColor(sf::Color::Green);
+	m_wave_time_text.setCharacterSize(25);
+	m_wave_time_text.setPosition(m_wave_time_text.getGlobalBounds().width,
+		m_window.getSize().y - m_wave_time_text.getGlobalBounds().height * 3);
 }
 
 void Game::init()
@@ -38,38 +81,7 @@ void Game::init()
 		GameManager::GetInstance()->Reset();
 	}
 
-#pragma region UI
-	//font
-	m_font.loadFromFile("data/Fonts/upheavtt.ttf");
-
-	//Score
-	m_score_text.setString("0");
-	m_score_text.setFont(m_font);
-	m_score_text.setFillColor(sf::Color::White);
-	m_score_text.setCharacterSize(75);
-	m_score_text.setOrigin(m_score_text.getGlobalBounds().width / 2.0f,
-		m_score_text.getGlobalBounds().height / 2.0f);
-	m_score_text.setPosition(m_window.getSize().x / 20.0f, m_window.getSize().y / 20.0f);
-	 
-	//GameOver
-	m_game_over_text.setString("GAME OVER");
-	m_game_over_text.setFont(m_font);
-	m_game_over_text.setFillColor(sf::Color::White);
-	m_game_over_text.setCharacterSize(200);
-	m_game_over_text.setStyle(sf::Text::Bold);
-	m_game_over_text.setOrigin(m_game_over_text.getGlobalBounds().width / 2.0f,
-		m_game_over_text.getGlobalBounds().height / 2.0f);
-	m_game_over_text.setPosition(m_window.getSize().x / 2.0f, m_window.getSize().y / 2.0f);
-
-	//Wave
-	m_wave_text.setString("Wave : 0");
-	m_wave_text.setFont(m_font);
-	m_wave_text.setFillColor(sf::Color::Yellow);
-	m_wave_text.setCharacterSize(30);
-	m_wave_text.setOrigin(m_wave_text.getGlobalBounds().width,
-		m_wave_text.getGlobalBounds().height / 2.0f);
-	m_wave_text.setPosition(m_window.getSize().x - m_window.getSize().x / 20.0f, m_window.getSize().y / 20.0f);
-#pragma endregion
+	SetupTexts();
 
 #pragma region PlayerCreation
 	//Create the player
@@ -304,6 +316,10 @@ bool Game::loop()
 		}
 		else
 		{
+			std::ostringstream oss;
+			oss << std::setprecision(2) << gameManager_.GetTimer();
+			m_wave_time_text.setString(oss.str());
+			m_window.draw(m_wave_time_text);
 			m_score_text.setString(std::to_string(gameManager_.GetScore()));
 			m_window.draw(m_score_text);
 		}

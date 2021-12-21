@@ -50,10 +50,12 @@ private:
 	sf::RenderWindow m_window;
 
 	//UI
+	void SetupTexts();
 	sf::Font m_font;
 	sf::Text m_score_text;
 	sf::Text m_game_over_text;
 	sf::Text m_wave_text;
+	sf::Text m_wave_time_text;
 	std::vector<std::unique_ptr<sf::Text>> texts_;
 
 	//Entities

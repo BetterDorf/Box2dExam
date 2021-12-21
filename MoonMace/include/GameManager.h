@@ -26,6 +26,7 @@ public:
 	
 	int GetScore() const;
 	int GetWave() const;
+	float GetTimer() const;
 
 	void IncreaseScore(int value);
 
