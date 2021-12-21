@@ -167,6 +167,10 @@ bool Game::loop()
 
 	while (m_window.isOpen())
 	{
+		//Register the time that has passed
+		sf::Time elapsed = clock.restart();
+		collectedElapsed += elapsed;
+
 #pragma region Event processes
 		sf::Event event;
 
@@ -248,10 +252,6 @@ bool Game::loop()
 			static constexpr int32 velocityIterations = 6;
 			static constexpr int32 positionIterations = 2;
 			m_world.Step(timeStep, velocityIterations, positionIterations);
-
-			// Tick every 1.0sec
-			sf::Time elapsed = clock.restart();
-			collectedElapsed += elapsed;
 #pragma endregion
 
 #pragma region Update GameManager
