@@ -9,7 +9,8 @@ enum class SpritePath
 	Chain,
 	Moon,
 	Explosion,
-	Rocket
+	Rocket,
+	Capsule
 };
 
 std::string ConvertPathToString(SpritePath path);

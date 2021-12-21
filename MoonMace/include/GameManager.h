@@ -40,6 +40,7 @@ private:
 	void SpawnEnemyShip();
 	void SpawnRocket();
 	void SpawnBigStar();
+	void SpawnCapsule();
 
 	b2Vec2 GenerateSpawnPosition();
 

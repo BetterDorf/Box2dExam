@@ -60,29 +60,46 @@ void GameManager::GenericSpawn()
 
 	do
 	{
-		int num = rand() % (ROCKET_ODDS + SHIP_ODDS + BIG_STAR_ODDS); //Choose a random number between 0 and the total of all weights
+		//Choose a random number between 0 and the total of all weights
+		int num = rand() % (ROCKET_ODDS + SHIP_ODDS + BIG_STAR_ODDS + CAPSULE_ODDS); 
 
 		num -= SHIP_ODDS;
-		if (num < 0 && budget > SHIP_COST)
+		if (num < 0)
 		{
+			if (budget < SHIP_COST)
+				break;
 			SpawnEnemyShip();
 			budget -= SHIP_COST;
 			continue;
 		}
 
 		num -= ROCKET_ODDS;
-		if (num < 0 && budget > ROCKET_COST)
+		if (num < 0)
 		{
+			if (budget < ROCKET_COST)
+				break;
 			SpawnRocket();
 			budget -= ROCKET_COST;
 			continue;
 		}
 
 		num -= BIG_STAR_ODDS;
-		if (num < 0 && budget > BIG_STAR_COST)
+		if (num < 0)
 		{
+			if (budget < BIG_STAR_COST)
+				break;
 			SpawnBigStar();
 			budget -= BIG_STAR_COST;
+			continue;
+		}
+
+		num -= CAPSULE_ODDS;
+		if (num < 0)
+		{
+			if (budget < CAPSULE_COST)
+				break;
+			SpawnCapsule();
+			budget -= CAPSULE_COST;
 			continue;
 		}
 
@@ -135,6 +152,19 @@ void GameManager::SpawnBigStar()
 	timeBetweenSpawn_ /= TIMER_SPEED_UP;
 }
 
+void GameManager::SpawnCapsule()
+{
+	b2Vec2 pos = GenerateSpawnPosition();
+
+	std::unique_ptr<DamagingEntity> uPtr = std::make_unique<DamagingEntity>(gameRef_, curId_++, CAPSULE_STRENGTH, 1);
+	uPtr->Init(pos.x, pos.y, SpritePath::Capsule);
+
+	gameRef_.GetEntities()->emplace_back(std::move(uPtr));
+
+	//Handle timer modifs
+	timer_ += timeBetweenSpawn_ * CAPSULE_MOD;
+	timeBetweenSpawn_ /= TIMER_SPEED_UP;
+}
 
 bool GameManager::IsGameOver() const
 {
